@@ -1,7 +1,10 @@
 # Changelog
 
-## 2026-06-29
+## Phase 0
 
-- Repository created.
-- Initial architecture planned.
-- Phase roadmap established.
+### Repository Initialization
+
+- Created project repository
+- Added documentation
+- Defined project scope
+- Planned application architecture
