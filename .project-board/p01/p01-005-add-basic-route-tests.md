@@ -17,6 +17,7 @@ Add tests for server startup behavior, page routes, and the public projection bo
 - [ ] Test command runs locally.
 - [ ] GM route test verifies page availability.
 - [ ] Player route test verifies page availability.
+- [ ] Player polling API test verifies page-safe public payload availability.
 - [ ] Public projection test verifies private fields are excluded.
 
 ## Notes

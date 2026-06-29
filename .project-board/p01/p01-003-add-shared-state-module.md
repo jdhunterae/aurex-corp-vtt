@@ -17,6 +17,7 @@ Implement an in-memory shared state module for the MVP.
 - [ ] Initial state matches `docs/state-model.md`.
 - [ ] Backend code owns canonical state.
 - [ ] State access is explicit and testable.
+- [ ] State is associated with an active foldered session.
 - [ ] No private state is passed directly to player routes.
 
 ## Notes

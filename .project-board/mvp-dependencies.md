@@ -10,8 +10,8 @@
 ## Open Decisions
 
 - State model: `docs/state-model.md` is currently empty.
-- Server stack: the docs call for a Python web server but do not choose a framework or standard-library approach. Flask or Django may be considered if useful, but the app should keep its own backend data model instead of relying on Django ORM/database machinery.
-- Persistence: local save/load is required for the MVP but is not assigned to a roadmap phase.
+- Server stack: Flask is approved as the minimal web wrapper. The app should keep its own backend data model instead of relying on Django ORM/database machinery.
+- Persistence: local save/load is required for the MVP. Autosave after every GM action and manual saves/exports are both required.
 - Image handling: GM image import/upload and URL download are required, but public-safe asset storage and validation rules still need to be defined.
 
 ## MVP Boundary
@@ -24,6 +24,7 @@ The local server MVP is complete after Phase 4 when the local-network version in
 - Initiative tracker
 - Local save/load persistence
 - Scene image import/upload or URL download into app-managed assets
+- Foldered sessions for separate prep contexts
 
 Hosting beyond the local network and player session connections are post-MVP concerns.
 

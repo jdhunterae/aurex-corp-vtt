@@ -18,8 +18,10 @@ Define the MVP scene fields and visibility rules before implementing scene displ
 - [ ] Public versus GM-only scene fields are identified.
 - [ ] Local image import/upload rules are documented.
 - [ ] URL image download rules are documented.
+- [ ] Supported image formats are documented: jpg/jpeg, tiff, png, gif, webp, svg.
 - [ ] Local file paths and arbitrary external URLs are never exposed to the player display.
 - [ ] Public scene images are represented by app-managed asset references.
+- [ ] Public scene image payloads include asset ID and resolved app URL.
 - [ ] Scene update validation requirements are listed.
 
 ## Notes

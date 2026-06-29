@@ -2,7 +2,7 @@
 
 ## Status
 
-Ready
+Done
 
 ## Phase
 
@@ -22,4 +22,4 @@ Choose the minimal Python server approach for the local server MVP.
 
 ## Notes
 
-Current docs say "Python web server" but do not choose a framework or standard-library server. Flask or Django can be considered if they speed up routing/templates, but the project should keep its own backend data model.
+Decision: use Flask as a minimal wrapper for routes, templates, static files, JSON endpoints, upload handling, and tests. Flask should not own canonical game state.

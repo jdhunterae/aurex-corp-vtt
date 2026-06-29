@@ -17,6 +17,7 @@ Create a Python application entrypoint that starts the local server successfully
 - [ ] Server starts with the documented command.
 - [ ] Root or health route confirms the app is running.
 - [ ] Server code remains small and readable.
+- [ ] Flask is used as the minimal server wrapper.
 - [ ] No database, async worker, authentication system, or build tool is introduced.
 
 ## Notes
