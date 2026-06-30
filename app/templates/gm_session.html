@@ -7,12 +7,13 @@
   <main class="page-shell">
     <header class="page-header">
       <p class="eyebrow">GM Session</p>
-      <h1>{{ session_id }}</h1>
+      <h1>{{ session.name }}</h1>
     </header>
 
     <section class="panel">
       <h2>Controls</h2>
       <p>Scene, tracker, initiative, and save controls will be added in later tickets.</p>
+      <p class="muted">Session ID: {{ session.id }}</p>
     </section>
   </main>
 {% endblock %}

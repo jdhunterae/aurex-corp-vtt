@@ -2,7 +2,7 @@
 
 ## Status
 
-Backlog
+Ready
 
 ## Phase
 
