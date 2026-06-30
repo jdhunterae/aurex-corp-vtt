@@ -59,6 +59,12 @@ Install dependencies:
 .venv/bin/python -m pip install -r requirements.txt
 ```
 
+Run tests:
+
+```text
+.venv/bin/python -m pytest
+```
+
 Run the local server:
 
 ```text
