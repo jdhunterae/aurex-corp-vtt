@@ -9,10 +9,25 @@
     data-session-id="{{ session_id }}"
     data-public-state-url="{{ public_state_url }}"
   >
-    <section class="player-scene">
-      <p class="eyebrow">Player Display</p>
-      <h1>Aurex Corp VTT</h1>
-      <p class="muted">Waiting for public session state.</p>
+    <section class="player-scene" aria-live="polite">
+      {% if public_state.scene %}
+        {% if public_state.scene.image %}
+          <img
+            class="scene-image"
+            src="{{ public_state.scene.image.url }}"
+            alt="{{ public_state.scene.title }}"
+          >
+        {% endif %}
+        <p class="eyebrow">Scene</p>
+        <h1>{{ public_state.scene.title }}</h1>
+        {% if public_state.scene.description %}
+          <p class="scene-description">{{ public_state.scene.description }}</p>
+        {% endif %}
+      {% else %}
+        <p class="eyebrow">Player Display</p>
+        <h1>Aurex Corp VTT</h1>
+        <p class="muted">Waiting for public session state.</p>
+      {% endif %}
     </section>
   </main>
 {% endblock %}

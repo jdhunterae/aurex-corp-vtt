@@ -32,9 +32,11 @@ def create_app() -> Flask:
     @app.get("/s/<session_id>/player")
     def player_view(session_id: str):
         session = get_session(session_id)
+        public_state = project_public_state(session)
         public_state_url = f"/api/s/{session_id}/public"
         return render_template(
             "player.html",
+            public_state=public_state,
             public_state_url=public_state_url,
             session_id=session["id"],
         )

@@ -81,3 +81,19 @@ body {
 .player-scene h1 {
   font-size: 56px;
 }
+
+.scene-image {
+  display: block;
+  width: min(100%, 1100px);
+  max-height: 68vh;
+  object-fit: contain;
+  margin: 0 auto 24px;
+}
+
+.scene-description {
+  max-width: 780px;
+  margin: 16px auto 0;
+  color: #d7dde3;
+  font-size: 22px;
+  line-height: 1.45;
+}
