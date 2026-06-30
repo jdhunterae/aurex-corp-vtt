@@ -27,6 +27,7 @@ Add initiative state and public projection behavior.
 - [ ] Public projection defaults discovered HP number display to current/max.
 - [ ] Public projection derives vibe health bands without exposing hidden HP numbers.
 - [ ] Public projection supports non-creature initiative rows.
+- [ ] Public non-creature rows expose only title/name and initiative slot number plus technical rendering fields.
 - [ ] Hidden or unrevealed combatants are excluded from player-facing payloads.
 - [ ] Projection behavior is covered by unit tests.
 

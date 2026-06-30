@@ -20,6 +20,11 @@ Allow the GM to add scene images through local import/upload or URL download whi
 - [ ] Imported and downloaded files are validated as supported image types.
 - [ ] Supported image types include jpg/jpeg, tiff, png, gif, webp, and svg.
 - [ ] SVG is allowed at GM discretion for MVP.
+- [ ] Local-only MVP has no explicit image file size limit.
+- [ ] Asset filenames use generated stable IDs, with GM display names stored separately.
+- [ ] Duplicate image detection warns the GM when an asset appears to match an existing asset.
+- [ ] GM can choose whether duplicate-looking images reuse the existing asset or remain separate copies.
+- [ ] URL downloads may follow limited redirects and must validate final image type.
 - [ ] Player-facing payloads receive only app-managed public asset references.
 - [ ] Player-facing payloads include asset ID and resolved app URL.
 - [ ] Local filesystem source paths are not stored in public state.

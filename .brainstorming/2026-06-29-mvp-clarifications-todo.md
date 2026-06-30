@@ -61,47 +61,41 @@ Autosave behavior:
 - Before overwriting the active autosave, the app should consider whether older slots should be rotated forward based on age and whether the save content differs.
 - During startup/warm-up, empty autosave slots should be populated from prior slot contents even if they are recent, then naturally drift toward target age windows as play continues.
 
-Still open:
-
-- Export workflow constraints, since browser file-system access may constrain folder selection.
+Decision: MVP export should use browser download. App-configured server-side export directories can be added later.
 
 ### Public Projection Contract
 
-Status: Partially resolved
+Status: Resolved
 
 Question: What exact public JSON should the player display receive?
-
-Decisions needed:
-
-- Which scene fields are public.
-- Which tracker fields are public.
-- Which initiative fields are public.
 
 Decisions:
 
 - Player-facing asset payloads should include both app-managed asset ID and resolved app URL.
+- Public payload fields are defined in `docs/api.md` and `docs/state-model.md`.
 
 Hard rule: player payloads must never include hidden GM notes, private counters, unrevealed monsters, secret data, keys, tokens, local source paths, or original image source URLs.
 
 ### Asset Storage
 
-Status: Partially resolved
+Status: Resolved
 
 Question: How should imported/uploaded/downloaded scene images be stored and exposed?
 
-Decisions needed:
-
-- Asset directory.
-- Maximum file size.
-- Filename generation.
-- Duplicate handling.
-
 Decisions:
 
+- MVP assets live under each foldered session, at `data/sessions/<session_id>/assets/`.
 - Allowed image formats for GM-selected assets: jpg/jpeg, tiff, png, gif, webp, and svg.
 - The intent is to allow common web-displayable image files at GM discretion.
 - Original URL source metadata should be stored privately in GM/session data.
 - Downloaded URL assets should be local resources so the app does not redownload the same image every time it is shown.
+- No explicit image file size limit is required for the local-only MVP.
+- Asset filenames should be generated internally as stable IDs, such as `asset-<uuid>.<ext>`.
+- GM-facing display names should be stored separately from filenames.
+- Duplicate image handling should warn the GM when an image appears to match an existing asset.
+- On duplicate detection, the GM should choose whether both locations share the existing asset or keep a separate copy.
+- URL downloads may follow normal redirects up to a small redirect limit.
+- The final URL response must still validate as an allowed image type.
 
 Current leaning: copy/download assets into an app-managed local asset folder and expose only server-generated public asset references.
 
@@ -142,10 +136,6 @@ Decisions:
 - Player display can hide raw numeric values and show only mapped text/color values.
 - For interval-mapped trackers, the player display should not reveal hidden progress within the interval unless the GM chooses to expose it.
 
-Still open:
-
-- Whether custom color picker is MVP or stretch.
-
 Decisions:
 
 - Tracker GM controls should always include default `-1` and `+1` buttons.
@@ -158,7 +148,7 @@ Decisions:
   - `number_label`
 - Tracker color scales should support defaults and later custom colors.
 - Default color scale options should include green-to-red, red-to-green, black-to-white, and white-to-black.
-- Custom color picker per state is a stretch goal unless promoted into MVP.
+- Custom color picker per state is a stretch goal.
 
 ### Initiative
 
@@ -167,7 +157,6 @@ Status: Partially resolved
 Questions:
 
 - Are hidden monsters absent from player initiative, or shown as hidden placeholders?
-- How are duplicate initiative values sorted?
 - Does the GM manually control turn order ties?
 - What combatant fields are visible to players?
 - Should non-combat public rows such as lair actions be supported in MVP?
@@ -193,14 +182,12 @@ Decisions:
   - seriously injured/bloodied: below 50%.
 - When the overall initiative display is hidden, the player UI should show no initiative panel, blank space, or placeholder.
 
-Still open:
-
-- How much detail non-creature rows can show publicly.
-
 Decisions:
 
 - AC reveal is per combatant. MVP does not need global enemy-type AC reveal behavior.
 - Initiative should support non-creature rows such as lair actions, environmental effects, pets, companions, vehicles, and similar turn-order entries.
+- Public non-creature rows should show only title/name and initiative slot number, plus technical rendering fields such as ID, kind, and current-turn status.
+- Duplicate initiative values sort by initiative descending, then manual `sort_order`.
 
 ### Save Load
 
@@ -224,13 +211,10 @@ Decisions:
 - Saves use JSON with schema/version metadata.
 - Corrupt saves notify the GM and offer timestamped autosave/manual save options to attempt loading.
 
-Still open:
-
-- Export implementation constraints.
-
 Decisions:
 
 - Loading any manual save or autosave should always require GM confirmation before replacing active state.
+- MVP export should use browser download. App-configured server-side export directories can be added later.
 
 ### URL Image Download
 
@@ -248,6 +232,8 @@ Decisions:
 
 - URL image import should download immediately when the GM submits/pastes the URL so showing the scene later does not block on resource download.
 - SVG is allowed at GM discretion for MVP because the local tool is currently GM-only.
+- URL downloads may follow normal redirects up to a small redirect limit.
+- The final URL response must still validate as an allowed image type.
 
 ## Tickets Needing Expansion
 
@@ -292,3 +278,11 @@ Decisions:
 - Tracker default color scales include green-to-red, red-to-green, black-to-white, and white-to-black.
 - Initiative supports non-creature rows such as lair actions, environmental effects, pets, companions, and vehicles.
 - Loading a save always requires GM confirmation before replacing active state.
+- No explicit image file size limit is required for the local-only MVP.
+- Duplicate image handling warns the GM and offers reuse/share versus separate copy.
+- Public non-creature initiative rows show only title/name and initiative slot number.
+- Asset filenames use generated stable IDs, with GM display names stored separately.
+- URL downloads may follow limited redirects and must validate final image type.
+- MVP export uses browser download.
+- Custom tracker color picker is a stretch goal.
+- Duplicate initiative values sort by initiative descending, then manual sort order.

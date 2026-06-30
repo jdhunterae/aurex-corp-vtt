@@ -14,7 +14,7 @@ Repository initialization
 
 - [x] Repository created
 - [x] Documentation started
-- [ ] Architecture finalized
+- [x] Architecture finalized
 
 ---
 
