@@ -11,8 +11,25 @@
     </header>
 
     <section class="panel">
-      <h2>Controls</h2>
-      <p>Scene, tracker, initiative, and save controls will be added in later tickets.</p>
+      <h2>Scene</h2>
+      {% if error_message %}
+        <p class="error-message">{{ error_message }}</p>
+      {% endif %}
+      <form class="control-form" action="{{ url_for('gm_scene_update', session_id=session.id) }}" method="post">
+        <label>
+          <span>Title</span>
+          <input name="title" value="{{ public_state.scene.title if public_state.scene else '' }}">
+        </label>
+        <label>
+          <span>Description</span>
+          <textarea name="description" rows="4">{{ public_state.scene.description if public_state.scene else '' }}</textarea>
+        </label>
+        <label>
+          <span>Image asset ID</span>
+          <input name="image_asset_id" value="{{ public_state.scene.image.id if public_state.scene and public_state.scene.image else '' }}">
+        </label>
+        <button type="submit">Update Scene</button>
+      </form>
       <p class="muted">Session ID: {{ session.id }}</p>
     </section>
   </main>

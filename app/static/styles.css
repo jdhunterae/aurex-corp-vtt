@@ -61,6 +61,46 @@ body {
   font-weight: 700;
 }
 
+.control-form {
+  display: grid;
+  gap: 16px;
+}
+
+.control-form label {
+  display: grid;
+  gap: 6px;
+  color: #343a40;
+  font-weight: 700;
+}
+
+.control-form input,
+.control-form textarea {
+  width: 100%;
+  border: 1px solid #b7bec7;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.control-form button {
+  width: fit-content;
+  border: 0;
+  border-radius: 6px;
+  background: #245f9f;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding: 10px 14px;
+}
+
+.error-message {
+  border-left: 4px solid #b42318;
+  background: #fff2f0;
+  color: #8a1f16;
+  padding: 10px 12px;
+}
+
 .player-shell {
   background: #101418;
   color: #f5f7f9;
