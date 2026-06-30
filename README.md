@@ -17,9 +17,18 @@ Unlike traditional VTTs, Aurex Corp VTT is intentionally minimal. It is designed
 
 ## Current Status
 
-Phase 0 — Project Planning
+Phase 0 — Project Planning Complete
 
-The repository currently contains architecture documentation and project planning. Application development begins in Phase 1.
+The repository contains finalized MVP planning docs for the local server version. Application development begins in Phase 1 with the Flask application skeleton.
+
+Key planning docs:
+
+- `/docs/roadmap.md`
+- `/docs/architecture.md`
+- `/docs/state-model.md`
+- `/docs/api.md`
+- `/docs/testing.md`
+- `/.project-board/`
 
 ## Planned Features
 
