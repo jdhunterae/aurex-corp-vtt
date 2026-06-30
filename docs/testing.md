@@ -78,6 +78,7 @@ Cover:
 
 - GM pages return successfully.
 - Player page returns successfully without embedding full state.
+- Bare session page redirects to the safer player view.
 - Public polling endpoint returns only projected state.
 - GM state-changing endpoints validate input.
 - GM state-changing endpoints trigger autosave.
