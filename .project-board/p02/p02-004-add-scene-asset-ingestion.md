@@ -2,7 +2,7 @@
 
 ## Status
 
-In Progress
+Done
 
 ## Phase
 
@@ -22,7 +22,7 @@ Allow the GM to add scene images through local import/upload or URL download whi
 - [x] SVG is allowed at GM discretion for MVP.
 - [x] Local-only MVP has no explicit image file size limit.
 - [x] Asset filenames use generated stable IDs, with GM display names stored separately.
-- [ ] Duplicate image detection warns the GM when an asset appears to match an existing asset.
+- [x] Duplicate image detection warns the GM when an asset appears to match an existing asset.
 - [x] GM can choose whether duplicate-looking images reuse the existing asset or remain separate copies.
 - [x] URL downloads may follow limited redirects and must validate final image type.
 - [x] Player-facing payloads receive only app-managed public asset references.
@@ -38,4 +38,4 @@ Allow the GM to add scene images through local import/upload or URL download whi
 
 Depends on P02-001. This ticket should define and implement the safe boundary between GM-supplied image sources and player-visible scene assets.
 
-Upload, URL download, local asset registration, app-managed serving, and duplicate behavior selection are implemented. Remaining work: active duplicate warning UX before saving a duplicate.
+Upload, URL download, local asset registration, app-managed serving, duplicate behavior selection, and active duplicate warning UX are implemented.

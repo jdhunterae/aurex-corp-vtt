@@ -4,7 +4,13 @@ from pathlib import Path
 
 from flask import Flask, jsonify, redirect, render_template, request, send_from_directory, url_for
 
-from app.assets import AssetIngestionError, download_image_asset, upload_image_asset
+from app.assets import (
+    AssetIngestionError,
+    download_image_asset,
+    preview_downloaded_image_duplicate,
+    preview_uploaded_image_duplicate,
+    upload_image_asset,
+)
 from app.projection import project_public_state
 from app.scenes import SceneValidationError, update_scene
 from app.state import get_session, load_or_create_session, session_path
@@ -152,6 +158,15 @@ def create_app() -> Flask:
             return jsonify({"error": {"code": "invalid_asset_upload", "message": str(error)}}), 400
         return jsonify({"asset": public_asset_response(asset), "autosaved": False})
 
+    @app.post("/api/gm/session/<session_id>/assets/upload/preview")
+    def api_asset_upload_preview(session_id: str):
+        session = get_session(session_id)
+        try:
+            duplicate = preview_uploaded_image_duplicate(session, request.files.get("image"))
+        except AssetIngestionError as error:
+            return jsonify({"error": {"code": "invalid_asset_upload", "message": str(error)}}), 400
+        return jsonify({"duplicate": public_asset_response(duplicate) if duplicate else None})
+
     @app.post("/api/gm/session/<session_id>/assets/download")
     def api_asset_download(session_id: str):
         session = get_session(session_id)
@@ -166,6 +181,16 @@ def create_app() -> Flask:
         except AssetIngestionError as error:
             return jsonify({"error": {"code": "invalid_asset_download", "message": str(error)}}), 400
         return jsonify({"asset": public_asset_response(asset), "autosaved": False})
+
+    @app.post("/api/gm/session/<session_id>/assets/download/preview")
+    def api_asset_download_preview(session_id: str):
+        session = get_session(session_id)
+        payload = request.get_json(silent=True) or {}
+        try:
+            duplicate = preview_downloaded_image_duplicate(session, url=payload.get("url", ""))
+        except AssetIngestionError as error:
+            return jsonify({"error": {"code": "invalid_asset_download", "message": str(error)}}), 400
+        return jsonify({"duplicate": public_asset_response(duplicate) if duplicate else None})
 
     @app.get("/assets/<session_id>/<asset_filename>")
     def serve_asset(session_id: str, asset_filename: str):

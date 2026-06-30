@@ -35,7 +35,13 @@
 
     <section class="panel">
       <h2>Assets</h2>
-      <form class="control-form" action="{{ url_for('gm_asset_upload', session_id=session.id) }}" method="post" enctype="multipart/form-data">
+      <form
+        class="control-form asset-upload-form"
+        action="{{ url_for('gm_asset_upload', session_id=session.id) }}"
+        data-preview-url="{{ url_for('api_asset_upload_preview', session_id=session.id) }}"
+        method="post"
+        enctype="multipart/form-data"
+      >
         <label>
           <span>Upload image</span>
           <input name="image" type="file" accept="image/*">
@@ -54,7 +60,12 @@
         <button type="submit">Upload Asset</button>
       </form>
 
-      <form class="control-form" action="{{ url_for('gm_asset_download', session_id=session.id) }}" method="post">
+      <form
+        class="control-form asset-download-form"
+        action="{{ url_for('gm_asset_download', session_id=session.id) }}"
+        data-preview-url="{{ url_for('api_asset_download_preview', session_id=session.id) }}"
+        method="post"
+      >
         <label>
           <span>Download image URL</span>
           <input name="url" type="url">
@@ -84,4 +95,5 @@
       {% endif %}
     </section>
   </main>
+  <script src="{{ url_for('static', filename='gm-session.js') }}"></script>
 {% endblock %}

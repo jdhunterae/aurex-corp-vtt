@@ -57,6 +57,19 @@ def upload_image_asset(
     )
 
 
+def preview_uploaded_image_duplicate(session: dict[str, Any], file_storage: FileStorage) -> dict[str, Any] | None:
+    if not file_storage or not file_storage.filename:
+        raise AssetIngestionError("Choose an image file to upload.")
+
+    original_filename = secure_filename(file_storage.filename)
+    validate_extension(extension_from_name(original_filename))
+    data = file_storage.read()
+    if not data:
+        raise AssetIngestionError("Uploaded image is empty.")
+    validate_mime_type(file_storage.mimetype or guess_mime_type(original_filename))
+    return find_duplicate_asset(session, hashlib.sha256(data).hexdigest())
+
+
 def download_image_asset(
     session: dict[str, Any],
     *,
@@ -64,6 +77,25 @@ def download_image_asset(
     display_name: str | None = None,
     duplicate_choice: str = "reuse",
 ) -> dict[str, Any]:
+    downloaded = fetch_image_url(url)
+
+    return register_asset(
+        session,
+        data=downloaded["data"],
+        extension=downloaded["extension"],
+        mime_type=downloaded["content_type"],
+        display_name=display_name or Path(downloaded["final_url"]).stem or "downloaded-image",
+        source={"type": "url", "original_url": url, "final_url": downloaded["final_url"], "imported_at": utc_now_iso()},
+        duplicate_choice=duplicate_choice,
+    )
+
+
+def preview_downloaded_image_duplicate(session: dict[str, Any], *, url: str) -> dict[str, Any] | None:
+    downloaded = fetch_image_url(url)
+    return find_duplicate_asset(session, hashlib.sha256(downloaded["data"]).hexdigest())
+
+
+def fetch_image_url(url: str) -> dict[str, Any]:
     url = url.strip()
     if not url:
         raise AssetIngestionError("Enter an image URL.")
@@ -85,15 +117,7 @@ def download_image_asset(
     if not data:
         raise AssetIngestionError("Downloaded image is empty.")
 
-    return register_asset(
-        session,
-        data=data,
-        extension=extension,
-        mime_type=content_type,
-        display_name=display_name or Path(final_url).stem or "downloaded-image",
-        source={"type": "url", "original_url": url, "final_url": final_url, "imported_at": utc_now_iso()},
-        duplicate_choice=duplicate_choice,
-    )
+    return {"content_type": content_type, "data": data, "extension": extension, "final_url": final_url}
 
 
 def register_asset(

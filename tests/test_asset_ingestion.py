@@ -137,6 +137,64 @@ def test_duplicate_download_reuses_existing_asset(client, monkeypatch):
     assert len(get_session("dupe-demo")["assets"]) == 1
 
 
+def test_upload_preview_warns_about_duplicate_asset(client):
+    upload = client.post(
+        "/api/gm/session/upload-preview/assets/upload",
+        data={
+            "display_name": "Elevator",
+            "image": (BytesIO(PNG_BYTES), "elevator.png"),
+        },
+        content_type="multipart/form-data",
+    )
+
+    preview = client.post(
+        "/api/gm/session/upload-preview/assets/upload/preview",
+        data={"image": (BytesIO(PNG_BYTES), "elevator-copy.png")},
+        content_type="multipart/form-data",
+    )
+
+    assert upload.status_code == 200
+    assert preview.status_code == 200
+    assert preview.json["duplicate"]["id"] == upload.json["asset"]["id"]
+    assert preview.json["duplicate"]["display_name"] == "Elevator"
+
+
+def test_download_preview_warns_about_duplicate_asset(client, monkeypatch):
+    class FakeHeaders:
+        def get_content_type(self):
+            return "image/png"
+
+    class FakeResponse:
+        headers = FakeHeaders()
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
+        def geturl(self):
+            return "https://cdn.example.test/elevator.png"
+
+        def read(self):
+            return PNG_BYTES
+
+    monkeypatch.setattr(assets, "urlopen", lambda request, timeout: FakeResponse())
+
+    download = client.post(
+        "/api/gm/session/download-preview/assets/download",
+        json={"url": "https://example.test/elevator.png", "display_name": "Elevator"},
+    )
+    preview = client.post(
+        "/api/gm/session/download-preview/assets/download/preview",
+        json={"url": "https://example.test/elevator.png"},
+    )
+
+    assert download.status_code == 200
+    assert preview.status_code == 200
+    assert preview.json["duplicate"]["id"] == download.json["asset"]["id"]
+
+
 def test_gm_upload_form_shows_registered_asset(client):
     response = client.post(
         "/s/form-upload/gm/assets/upload",
@@ -152,3 +210,12 @@ def test_gm_upload_form_shows_registered_asset(client):
     assert response.status_code == 200
     assert "Elevator" in body
     assert "asset-" in body
+
+
+def test_gm_session_page_includes_duplicate_warning_script(client):
+    response = client.get("/s/script-demo/gm")
+    body = response.get_data(as_text=True)
+
+    assert response.status_code == 200
+    assert "gm-session.js" in body
+    assert "data-preview-url" in body

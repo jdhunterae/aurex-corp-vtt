@@ -102,6 +102,13 @@ body {
   padding: 10px 12px;
 }
 
+.duplicate-warning {
+  border-left: 4px solid #d97706;
+  background: #fff7ed;
+  color: #8a4b0f;
+  padding: 10px 12px;
+}
+
 .asset-list {
   margin: 16px 0 0;
   padding-left: 20px;
