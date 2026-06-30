@@ -2,6 +2,7 @@
 
 from flask import Flask, jsonify, redirect, render_template, url_for
 
+from app.projection import project_public_state
 from app.state import get_session, load_or_create_session
 
 
@@ -19,6 +20,7 @@ def create_app() -> Flask:
         return render_template("gm_home.html")
 
     @app.get("/s/<session_id>")
+    @app.get("/s/<session_id>/")
     def session_home(session_id: str):
         return redirect(url_for("player_view", session_id=session_id))
 
@@ -40,6 +42,14 @@ def create_app() -> Flask:
     @app.get("/healthz")
     def healthz():
         return jsonify({"status": "ok"})
+
+    @app.get("/api/s/<session_id>/public")
+    def public_state(session_id: str):
+        return jsonify(project_public_state(get_session(session_id)))
+
+    @app.errorhandler(404)
+    def not_found(error):
+        return render_template("error.html", status_code=404, title="Page not found"), 404
 
     return app
 

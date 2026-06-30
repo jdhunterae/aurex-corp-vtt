@@ -56,6 +56,11 @@ body {
   color: #56606a;
 }
 
+.panel a {
+  color: #245f9f;
+  font-weight: 700;
+}
+
 .player-shell {
   background: #101418;
   color: #f5f7f9;
