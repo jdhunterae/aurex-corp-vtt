@@ -44,3 +44,31 @@ Key planning docs:
 ## Roadmap
 
 See `/docs/roadmap.md`
+
+## Local Development
+
+Create a local virtual environment:
+
+```text
+python -m venv .venv
+```
+
+Install dependencies:
+
+```text
+.venv/bin/python -m pip install -r requirements.txt
+```
+
+Run the local server:
+
+```text
+.venv/bin/flask --app app.server run --debug
+```
+
+Health check:
+
+```text
+GET /healthz
+```
+
+Use the local virtual environment for future Python commands, package installs, and tests. Do not install project dependencies into the global Python environment.

@@ -29,13 +29,19 @@ Redirects to the GM session picker or local GM home page.
 
 Returns the GM session picker and local management page.
 
-### `GET /gm/session/<session_id>`
+### `GET /s/<session_id>`
+
+Redirects to `/s/<session_id>/player`.
+
+The bare session route uses the safer player view by default.
+
+### `GET /s/<session_id>/gm`
 
 Returns the GM control interface for a foldered session.
 
 This page may load full GM state through GM API endpoints.
 
-### `GET /player/<session_id>`
+### `GET /s/<session_id>/player`
 
 Returns the passive player display for a foldered session.
 
@@ -43,7 +49,7 @@ This page must not include full state in rendered HTML or client-side JavaScript
 
 ## Public API
 
-### `GET /api/session/<session_id>/public`
+### `GET /api/s/<session_id>/public`
 
 Returns the player-safe public projection.
 

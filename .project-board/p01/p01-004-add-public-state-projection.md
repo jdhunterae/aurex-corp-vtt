@@ -17,7 +17,7 @@ Implement the public projection layer used by player routes and APIs.
 - [ ] Projection returns only fields documented in the public contract.
 - [ ] Projection is covered by unit tests.
 - [ ] Player routes and player API payloads use projection output.
-- [ ] `/api/session/<session_id>/public` route returns projection output.
+- [ ] `/api/s/<session_id>/public` route returns projection output.
 - [ ] Projection includes session ID/name and empty or default scene/tracker/initiative fields.
 - [ ] Projection handles globally hidden initiative as `null`.
 - [ ] Projection includes app-managed asset ID and URL when a scene image exists.

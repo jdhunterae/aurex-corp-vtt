@@ -25,6 +25,6 @@ Do not implement Phase 2-4 features in Phase 1 except as empty/default state nee
 - Local server starts with the documented command.
 - GM page shell is available.
 - Player page shell is available.
-- Public polling endpoint returns player-safe state.
+- Public polling endpoint at `/api/s/<session_id>/public` returns player-safe state.
 - Basic route and projection tests pass with `pytest`.
 - No GM-only fields are exposed through player routes, public JSON, static files, or client JavaScript.
