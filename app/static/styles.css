@@ -44,6 +44,7 @@ body {
   border-radius: 8px;
   background: #ffffff;
   padding: 20px;
+  margin-bottom: 20px;
 }
 
 .panel h2 {
@@ -99,6 +100,11 @@ body {
   background: #fff2f0;
   color: #8a1f16;
   padding: 10px 12px;
+}
+
+.asset-list {
+  margin: 16px 0 0;
+  padding-left: 20px;
 }
 
 .player-shell {

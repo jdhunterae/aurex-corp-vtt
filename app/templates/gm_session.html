@@ -32,5 +32,56 @@
       </form>
       <p class="muted">Session ID: {{ session.id }}</p>
     </section>
+
+    <section class="panel">
+      <h2>Assets</h2>
+      <form class="control-form" action="{{ url_for('gm_asset_upload', session_id=session.id) }}" method="post" enctype="multipart/form-data">
+        <label>
+          <span>Upload image</span>
+          <input name="image" type="file" accept="image/*">
+        </label>
+        <label>
+          <span>Display name</span>
+          <input name="display_name">
+        </label>
+        <label>
+          <span>If this matches an existing asset</span>
+          <select name="duplicate_choice">
+            <option value="copy">Keep a separate copy</option>
+            <option value="reuse">Reuse the existing asset</option>
+          </select>
+        </label>
+        <button type="submit">Upload Asset</button>
+      </form>
+
+      <form class="control-form" action="{{ url_for('gm_asset_download', session_id=session.id) }}" method="post">
+        <label>
+          <span>Download image URL</span>
+          <input name="url" type="url">
+        </label>
+        <label>
+          <span>Display name</span>
+          <input name="display_name">
+        </label>
+        <label>
+          <span>If this matches an existing asset</span>
+          <select name="duplicate_choice">
+            <option value="reuse">Reuse the existing asset</option>
+            <option value="copy">Keep a separate copy</option>
+          </select>
+        </label>
+        <button type="submit">Download Asset</button>
+      </form>
+
+      {% if session.assets %}
+        <ul class="asset-list">
+          {% for asset in session.assets %}
+            <li><code>{{ asset.id }}</code> {{ asset.display_name }}</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="muted">No app-managed assets yet.</p>
+      {% endif %}
+    </section>
   </main>
 {% endblock %}
