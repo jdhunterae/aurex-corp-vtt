@@ -2,7 +2,7 @@
 
 ## Status
 
-Backlog
+Done
 
 ## Phase
 
@@ -14,11 +14,13 @@ Show the current public scene on the player display.
 
 ## Acceptance Criteria
 
-- [ ] Player display renders public scene title.
-- [ ] Player display renders public scene description.
-- [ ] Player display renders the approved public scene image reference.
-- [ ] Missing scene data has a readable fallback state.
+- [x] Player display renders public scene title.
+- [x] Player display renders public scene description.
+- [x] Player display renders the approved public scene image reference.
+- [x] Missing scene data has a readable fallback state.
 
 ## Notes
 
 Depends on P02-001 and P01-004.
+
+Completed in `app/templates/player.html` with projection-backed route data and coverage in `tests/test_scene_display.py`.

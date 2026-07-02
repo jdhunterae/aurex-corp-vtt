@@ -33,6 +33,14 @@ def test_player_routes_return_passive_page_shell(client):
     assert "gm_notes" not in body
 
 
+def test_player_page_renders_missing_scene_fallback(client):
+    response = client.get("/s/demo-session/player")
+    body = response.get_data(as_text=True)
+
+    assert response.status_code == 200
+    assert "Waiting for public session state." in body
+
+
 def test_bare_session_route_redirects_to_player(client):
     response = client.get("/s/demo-session")
     response_with_slash = client.get("/s/demo-session/")

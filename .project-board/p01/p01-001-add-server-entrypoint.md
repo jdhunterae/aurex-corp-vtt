@@ -32,10 +32,10 @@ Suggested implementation files:
 - `app/server.py`
 - `app/__init__.py`
 
-Suggested command:
+Current command:
 
 ```text
-flask --app app.server run --debug
+.venv/bin/flask --app app.server run --debug
 ```
 
 If a different command is chosen during implementation, update `README.md` or a developer setup doc in the same change.

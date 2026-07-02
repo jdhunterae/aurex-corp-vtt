@@ -180,13 +180,10 @@ Player payloads may include app asset IDs and resolved app URLs. They must not i
 - `source.original_url`
 - import metadata
 
-Open asset questions:
-
-- Final asset directory.
-
 MVP asset decisions:
 
 - No explicit image file size limit is required for the local-only MVP.
+- Assets are stored in the app-managed `data/sessions/<session_id>/assets/` folder for the current MVP implementation.
 - Asset filenames should be generated internally as stable IDs, such as `asset-<uuid>.<ext>`.
 - GM-facing display names should be stored separately from filenames.
 - Duplicate image handling should notify the GM when an imported/downloaded image appears to match an existing asset.

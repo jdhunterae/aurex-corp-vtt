@@ -12,31 +12,36 @@ Use `pytest` for MVP tests.
 
 Use Flask's test client for route tests.
 
-Planned command:
+Current command:
 
 ```text
-pytest
+.venv/bin/python -m pytest
 ```
 
-Add test dependencies only when implementation begins.
+The project currently uses `pytest` and Flask's test client. Dependencies are listed in `requirements.txt`.
+
+Current coverage includes:
+
+- Route smoke tests for GM, player, health, redirects, and 404 handling.
+- Public projection tests for session, scene, tracker, and initiative visibility behavior.
+- Scene update validation tests.
+- Scene display rendering tests.
+- Asset upload, URL download, duplicate detection, and asset-serving tests.
 
 ## Test Layout
 
-Suggested layout:
+Current layout:
 
 ```text
 tests/
   test_projection.py
-  test_validation.py
-  test_routes_public.py
-  test_routes_gm.py
-  test_assets.py
-  test_trackers.py
-  test_initiative.py
-  test_persistence.py
+  test_routes.py
+  test_scene_controls.py
+  test_scene_display.py
+  test_asset_ingestion.py
 ```
 
-This can be adjusted as modules are implemented, but tests should stay grouped by behavior rather than by UI page.
+Future tracker, initiative, and persistence work should add focused test modules, such as `test_trackers.py`, `test_initiative.py`, and `test_persistence.py`, as those features are implemented. Tests should stay grouped by behavior rather than by UI page.
 
 ## Projection Tests
 
@@ -84,6 +89,8 @@ Cover:
 - GM state-changing endpoints trigger autosave.
 - Asset upload/download routes create app-managed asset records.
 - Scene update routes reject local paths and external URLs as direct scene image references.
+
+Autosave assertions are pending until local persistence is implemented.
 
 ## Persistence Tests
 

@@ -44,6 +44,7 @@ body {
   border-radius: 8px;
   background: #ffffff;
   padding: 20px;
+  margin-bottom: 20px;
 }
 
 .panel h2 {
@@ -59,6 +60,58 @@ body {
 .panel a {
   color: #245f9f;
   font-weight: 700;
+}
+
+.control-form {
+  display: grid;
+  gap: 16px;
+}
+
+.control-form label {
+  display: grid;
+  gap: 6px;
+  color: #343a40;
+  font-weight: 700;
+}
+
+.control-form input,
+.control-form textarea {
+  width: 100%;
+  border: 1px solid #b7bec7;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font: inherit;
+}
+
+.control-form button {
+  width: fit-content;
+  border: 0;
+  border-radius: 6px;
+  background: #245f9f;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding: 10px 14px;
+}
+
+.error-message {
+  border-left: 4px solid #b42318;
+  background: #fff2f0;
+  color: #8a1f16;
+  padding: 10px 12px;
+}
+
+.duplicate-warning {
+  border-left: 4px solid #d97706;
+  background: #fff7ed;
+  color: #8a4b0f;
+  padding: 10px 12px;
+}
+
+.asset-list {
+  margin: 16px 0 0;
+  padding-left: 20px;
 }
 
 .player-shell {
@@ -80,4 +133,20 @@ body {
 
 .player-scene h1 {
   font-size: 56px;
+}
+
+.scene-image {
+  display: block;
+  width: min(100%, 1100px);
+  max-height: 68vh;
+  object-fit: contain;
+  margin: 0 auto 24px;
+}
+
+.scene-description {
+  max-width: 780px;
+  margin: 16px auto 0;
+  color: #d7dde3;
+  font-size: 22px;
+  line-height: 1.45;
 }

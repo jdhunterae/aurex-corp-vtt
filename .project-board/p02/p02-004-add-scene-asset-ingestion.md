@@ -2,7 +2,7 @@
 
 ## Status
 
-Backlog
+Done
 
 ## Phase
 
@@ -14,26 +14,28 @@ Allow the GM to add scene images through local import/upload or URL download whi
 
 ## Acceptance Criteria
 
-- [ ] GM can add a local image through the documented import/upload workflow.
-- [ ] GM can provide a URL that the server downloads into app-managed assets.
-- [ ] URL image import downloads when submitted so scene display does not wait on remote download.
-- [ ] Imported and downloaded files are validated as supported image types.
-- [ ] Supported image types include jpg/jpeg, tiff, png, gif, webp, and svg.
-- [ ] SVG is allowed at GM discretion for MVP.
-- [ ] Local-only MVP has no explicit image file size limit.
-- [ ] Asset filenames use generated stable IDs, with GM display names stored separately.
-- [ ] Duplicate image detection warns the GM when an asset appears to match an existing asset.
-- [ ] GM can choose whether duplicate-looking images reuse the existing asset or remain separate copies.
-- [ ] URL downloads may follow limited redirects and must validate final image type.
-- [ ] Player-facing payloads receive only app-managed public asset references.
-- [ ] Player-facing payloads include asset ID and resolved app URL.
-- [ ] Local filesystem source paths are not stored in public state.
-- [ ] URL source values are not exposed to the player display.
-- [ ] Original URL source metadata is stored privately in GM/session data.
-- [ ] Downloaded URL assets are reused locally instead of redownloaded when shown again.
-- [ ] Failed imports or downloads return clear errors.
-- [ ] Asset ingestion behavior is covered by tests.
+- [x] GM can add a local image through the documented import/upload workflow.
+- [x] GM can provide a URL that the server downloads into app-managed assets.
+- [x] URL image import downloads when submitted so scene display does not wait on remote download.
+- [x] Imported and downloaded files are validated as supported image types.
+- [x] Supported image types include jpg/jpeg, tiff, png, gif, webp, and svg.
+- [x] SVG is allowed at GM discretion for MVP.
+- [x] Local-only MVP has no explicit image file size limit.
+- [x] Asset filenames use generated stable IDs, with GM display names stored separately.
+- [x] Duplicate image detection warns the GM when an asset appears to match an existing asset.
+- [x] GM can choose whether duplicate-looking images reuse the existing asset or remain separate copies.
+- [x] URL downloads may follow limited redirects and must validate final image type.
+- [x] Player-facing payloads receive only app-managed public asset references.
+- [x] Player-facing payloads include asset ID and resolved app URL.
+- [x] Local filesystem source paths are not stored in public state.
+- [x] URL source values are not exposed to the player display.
+- [x] Original URL source metadata is stored privately in GM/session data.
+- [x] Downloaded URL assets are reused locally instead of redownloaded when shown again.
+- [x] Failed imports or downloads return clear errors.
+- [x] Asset ingestion behavior is covered by tests.
 
 ## Notes
 
 Depends on P02-001. This ticket should define and implement the safe boundary between GM-supplied image sources and player-visible scene assets.
+
+Upload, URL download, local asset registration, app-managed serving, duplicate behavior selection, and active duplicate warning UX are implemented.
