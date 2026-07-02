@@ -10,7 +10,7 @@ Phase 3 - Generic Trackers
 
 ## Goal
 
-Add tracker state and public projection behavior.
+Complete tracker state and public projection behavior.
 
 ## Acceptance Criteria
 
@@ -22,9 +22,15 @@ Add tracker state and public projection behavior.
 - [ ] Public projection handles interval-mapped tracker states.
 - [ ] Public projection can hide raw numeric progress for interval-mapped trackers.
 - [ ] Public projection supports default tracker color scales.
+- [ ] Public projection uses custom named-value colors only when present and otherwise derives colors from the selected default color scale.
+- [ ] Public projection handles missing or malformed optional tracker fields safely.
 - [ ] Hidden trackers are excluded from player-facing payloads.
-- [ ] Projection behavior is covered by unit tests.
+- [ ] Projection behavior is covered by focused unit tests for all display modes and hidden/private-field exclusion.
 
 ## Notes
 
 Depends on P03-001 and P01-004.
+
+`app/state.py` already initializes `trackers` as an empty list, and `app/projection.py` already contains basic tracker projection helpers. Current helper coverage is partial: hidden trackers and one `label_color` interval case are tested, but default color scale derivation, all display modes, malformed optional fields, and validation boundaries still need Phase 3 work.
+
+This ticket should preserve the player safety boundary from Phase 1: hidden trackers, GM notes, local paths, and any private tracker fields must not appear in `/api/s/<session_id>/public`.

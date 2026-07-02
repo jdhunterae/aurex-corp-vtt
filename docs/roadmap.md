@@ -86,6 +86,7 @@ Initial tickets:
 - P03-001 Define Generic Tracker Model
 - P03-002 Add Tracker State and Projection
 - P03-003 Add Tracker GM Controls
+- P03-004 Add Tracker Player Display
 
 ---
 
