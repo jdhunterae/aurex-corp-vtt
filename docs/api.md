@@ -15,9 +15,15 @@ The MVP uses Flask as a minimal wrapper for routes, templates, static files, JSO
 - Keep routes small.
 - Prefer simple JSON payloads.
 - Validate every GM update server-side.
-- Trigger autosave after every successful GM state-changing action.
+- Trigger autosave after every successful GM state-changing action once local persistence is implemented.
 - Never return full session state from player routes.
 - Never expose local paths, original image URLs, hidden notes, hidden trackers, hidden combatants, hidden AC, or hidden HP to players.
+
+Current implementation status:
+
+- Phase 1 and Phase 2 page routes, public projection, scene update, asset upload, asset URL download, duplicate preview, and app-managed asset serving are implemented.
+- Tracker, initiative, GM session listing/creation, full GM session API, and persistence APIs remain planned work.
+- JSON responses currently return `"autosaved": false` for implemented GM mutations because local persistence is not implemented yet.
 
 ## Page Routes
 
@@ -99,6 +105,8 @@ Projection rules:
 
 ## GM Session API
 
+Status: planned. The current app supports direct session URLs such as `/s/default/gm`, but session listing, creation, and full GM-state JSON endpoints are not implemented yet.
+
 ### `GET /api/gm/sessions`
 
 Lists available foldered sessions.
@@ -174,7 +182,7 @@ Example response:
     "description": "A damp stone opening descends into darkness.",
     "image_asset_id": "asset-001"
   },
-  "autosaved": true
+  "autosaved": false
 }
 ```
 
@@ -212,7 +220,7 @@ Example response:
     "mime_type": "image/png",
     "public_url": "/assets/session-001/asset-001.png"
   },
-  "autosaved": true
+  "autosaved": false
 }
 ```
 
@@ -242,19 +250,16 @@ Example response:
     "mime_type": "image/png",
     "public_url": "/assets/session-001/asset-001.png"
   },
-  "autosaved": true
+  "autosaved": false
 }
 ```
 
 Private asset metadata may retain the original URL for GM reference and debugging. Player payloads must never include original source URLs.
 
-Open asset API questions:
-
-- Final asset directory.
-
 MVP asset API decisions:
 
 - No explicit image file size limit is required for the local-only MVP.
+- Assets are stored in the app-managed `data/sessions/<session_id>/assets/` folder for the current MVP implementation.
 - Asset filenames should be generated internally as stable IDs, such as `asset-<uuid>.<ext>`.
 - GM-facing display names should be stored separately from filenames.
 - Duplicate asset detection should warn the GM when an imported/downloaded image appears to match an existing asset.
@@ -269,6 +274,8 @@ Serves app-managed asset files.
 This route must only serve files from the app-managed session asset folder. It must not accept arbitrary local file paths.
 
 ## Tracker API
+
+Status: planned for Phase 3. Tracker projection helpers exist, but tracker GM routes, tracker state validation, and tracker UI are not implemented yet.
 
 ### `POST /api/gm/session/<session_id>/trackers`
 
@@ -344,6 +351,8 @@ Validation:
 - Color scale must be one of `green_to_red`, `red_to_green`, `black_to_white`, `white_to_black`.
 
 ## Initiative API
+
+Status: planned for Phase 4. Initiative projection helpers exist, but initiative GM routes, initiative state validation, and initiative UI are not implemented yet.
 
 ### `PATCH /api/gm/session/<session_id>/initiative`
 
@@ -435,6 +444,8 @@ Public non-creature initiative rows should include title/name and initiative slo
 
 ## Save And Load API
 
+Status: planned for the MVP after scene, tracker, and initiative state exist. Local save/load persistence and autosave are not implemented yet.
+
 ### `POST /api/gm/session/<session_id>/save`
 
 Creates a manual in-session save.
@@ -515,6 +526,8 @@ Example request:
 
 ## Autosave Behavior
 
+Status: planned. Implemented GM mutation endpoints currently return `"autosaved": false`.
+
 Every successful GM state-changing endpoint should trigger autosave.
 
 Autosave slots:
@@ -553,6 +566,6 @@ Tests should cover:
 - Visible initiative entries use `???` for hidden data.
 - Known initiative entries show only discovered AC/HP.
 - Scene image references must be app-managed assets.
-- GM state-changing endpoints trigger autosave.
+- GM state-changing endpoints trigger autosave once persistence is implemented.
 - Save load requires explicit confirmation.
 - Corrupt save handling returns clear errors and viable alternatives when possible.

@@ -2,11 +2,18 @@
 
 ## Purpose
 
-The application consists of a single backend responsible for maintaining game state.
+The application consists of a single Flask backend responsible for maintaining game state.
 
 The GM interacts with the backend through a control interface.
 
 Players receive a filtered, read-only view of the same state.
+
+Current implementation status:
+
+- Phase 1 application skeleton is complete.
+- Phase 2 scene display is complete.
+- Phase 3 generic trackers are next.
+- Phase 4 initiative and local save/load persistence remain backlog.
 
 ---
 
@@ -16,11 +23,15 @@ GM Browser
 
 ↓
 
-Python Server
+Flask Server
 
 ↓
 
-Shared State
+Backend Session State
+
+↓
+
+Public Projection
 
 ↓
 
@@ -34,18 +45,32 @@ The backend owns all state.
 
 The player interface never modifies state.
 
-The GM interface edits state exclusively through API endpoints.
+The GM interface edits state through server-side routes and JSON endpoints.
 
-The player interface only receives public information.
+The player interface only receives public projected information.
+
+GM-only notes, original asset source URLs, local paths, hidden trackers, hidden combatants, hidden AC, hidden HP, and private save metadata must not reach player routes or player JSON.
+
+## Current Runtime Shape
+
+The MVP currently uses in-memory session state with project-local session folders under `data/sessions/`.
+
+Implemented session-scoped assets are stored under:
+
+```text
+data/sessions/<session_id>/assets/
+```
+
+Local save/load persistence is planned but not implemented yet. JSON GM mutation responses currently report `autosaved: false` until persistence exists.
 
 ---
 
 ## Future Considerations
 
-Eventually multiple sessions should be supported.
+Session IDs are already part of the route and folder structure. A session listing/creation UI and persistence-backed session loading are still future work.
 
 Each session should have:
 
 - Session ID
-- GM Key
+- GM Key or other access control, if remote sharing is added later
 - Independent state

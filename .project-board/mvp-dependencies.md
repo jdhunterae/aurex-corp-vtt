@@ -9,10 +9,18 @@
 
 ## Open Decisions
 
-- State model: `docs/state-model.md` is currently empty.
+- State model: `docs/state-model.md` now defines the MVP session, asset, scene, tracker, initiative, and persistence shapes.
 - Server stack: Flask is approved as the minimal web wrapper. The app should keep its own backend data model instead of relying on Django ORM/database machinery.
 - Persistence: local save/load is required for the MVP. Autosave after every GM action and manual saves/exports are both required.
-- Image handling: GM image import/upload and URL download are required, but public-safe asset storage and validation rules still need to be defined.
+- Image handling: GM image upload and URL download into app-managed session assets are implemented for Phase 2. Remaining persistence work must ensure assets and saves stay session-scoped.
+
+## Current Development Position
+
+- Phase 0 planning tickets are complete.
+- Phase 1 application skeleton tickets are complete.
+- Phase 2 scene display tickets are complete.
+- Phase 3 generic tracker tickets are next.
+- Phase 4 initiative and local save/load tickets remain backlog.
 
 ## MVP Boundary
 
