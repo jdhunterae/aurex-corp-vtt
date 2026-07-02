@@ -32,6 +32,14 @@ Scene controls: implemented for Phase 2.
 
 Tracker controls: planned for Phase 3.
 
+Phase 3 tracker controls should support:
+
+- Creating generic numeric trackers rather than specialized tracker types.
+- Editing label, value, visibility, bounds, interval, display mode, color scale, and named values.
+- Quick adjustment buttons that always include `-1` and `+1`.
+- Larger adjustment buttons derived from the tracker interval or explicit `step_controls`.
+- Clear validation errors on the GM session page.
+
 Initiative controls: planned for Phase 4.
 
 Notes: planned.

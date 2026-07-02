@@ -228,7 +228,15 @@ Private scene fields:
 
 ## Trackers
 
-Trackers are reusable counters/scales for timers, alert levels, resources, gold, and similar table state.
+Trackers are reusable numeric counters/scales for timers, alert levels, resources, gold, and similar table state.
+
+The MVP should not introduce one-off tracker types such as `round_counter` or `torch_timer`. Those examples are represented by the same generic tracker fields:
+
+- Round Counter: unbounded, numeric display, value starts at 1.
+- Torch Timer: bounded countdown, numeric or number_label display.
+- Countdown: bounded, numeric display, min value usually 0.
+- Party Gold: unbounded, numeric display.
+- Alert Level: bounded, interval-mapped named values, label or label_color display.
 
 ```json
 {
@@ -254,17 +262,33 @@ Trackers are reusable counters/scales for timers, alert levels, resources, gold,
 }
 ```
 
+Field notes:
+
+- `id`: app-generated tracker ID unique within the session.
+- `label`: GM-facing and public tracker name.
+- `value`: canonical numeric value. The backend stores numbers even when players see labels.
+- `visible`: whether the tracker is included in player public projection.
+- `mode`: bounded or unbounded numeric behavior.
+- `min_value`: lower bound for bounded trackers and label interval baseline.
+- `max_value`: upper bound for bounded trackers.
+- `interval`: positive integer used to map numeric ranges to named values.
+- `display_mode`: player-facing display behavior.
+- `color_scale`: default color derivation for `label_color` display when named values do not provide explicit colors.
+- `named_values`: optional public labels mapped from numeric value ranges.
+- `step_controls`: optional GM-facing adjustment buttons. The backend still validates every resulting value.
+- `gm_notes`: private GM-only tracker notes, never included in public projection.
+
 `mode` values:
 
-- `bounded`
-- `unbounded`
+- `bounded`: `value` must stay between `min_value` and `max_value`.
+- `unbounded`: `value` may grow without `max_value`; `min_value` may still be used as the label interval baseline.
 
 `display_mode` values:
 
-- `number`
-- `label`
-- `label_color`
-- `number_label`
+- `number`: players see only the numeric value.
+- `label`: players see only the mapped label.
+- `label_color`: players see the mapped label and a projected display color.
+- `number_label`: players see the numeric value and mapped label.
 
 Default `color_scale` values:
 
@@ -273,7 +297,16 @@ Default `color_scale` values:
 - `black_to_white`
 - `white_to_black`
 
-Custom per-state colors are a stretch goal unless promoted into the MVP.
+Default color scales are derived across the named value index range. If there is only one named value, use the first color in the scale.
+
+Default scale endpoints:
+
+- `green_to_red`: `#2f9e44` to `#c92a2a`
+- `red_to_green`: `#c92a2a` to `#2f9e44`
+- `black_to_white`: `#1f2933` to `#f8fafc`
+- `white_to_black`: `#f8fafc` to `#1f2933`
+
+When a `named_values` item has an explicit `color`, that color wins for that item. Otherwise the projection derives a color from `color_scale` and the mapped named value index.
 
 For MVP, custom per-state color picker remains a stretch goal. MVP uses the default color scales.
 
@@ -286,8 +319,23 @@ Interval mapping:
 GM controls:
 
 - Always include `-1` and `+1`.
-- May include interval-derived step buttons based on `ceil(interval / 2)`.
-- May support explicit GM-configured step controls.
+- May include interval-derived step buttons based on `ceil(interval / 2)` when that value is greater than 1.
+- May support explicit GM-configured `step_controls`.
+- Must validate the resulting tracker value server-side; disabled buttons in the UI are not sufficient validation.
+
+Validation rules:
+
+- `label` must not be blank after trimming.
+- `mode` must be `bounded` or `unbounded`.
+- `display_mode` must be `number`, `label`, `label_color`, or `number_label`.
+- `color_scale` must be one of the documented default scales.
+- `value`, `min_value`, `max_value`, and `interval` must parse as integers.
+- `interval` must be at least 1.
+- Bounded trackers require `min_value <= value <= max_value`.
+- Bounded trackers require `min_value <= max_value`.
+- Unbounded trackers may omit `max_value`.
+- Display modes that use mapped labels should have at least one nonblank named value.
+- Tracker IDs are app-generated and must not accept path separators, URLs, or local paths from GM input.
 
 Public tracker projection for `label_color`:
 
