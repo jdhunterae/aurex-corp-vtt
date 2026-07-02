@@ -22,7 +22,7 @@ The MVP uses Flask as a minimal wrapper for routes, templates, static files, JSO
 Current implementation status:
 
 - Phase 1 and Phase 2 page routes, public projection, scene update, asset upload, asset URL download, duplicate preview, and app-managed asset serving are implemented.
-- Tracker, initiative, GM session listing/creation, full GM session API, and persistence APIs remain planned work.
+- Initiative, GM session listing/creation, full GM session API, and persistence APIs remain planned work.
 - JSON responses currently return `"autosaved": false` for implemented GM mutations because local persistence is not implemented yet.
 
 ## Page Routes
@@ -275,7 +275,7 @@ This route must only serve files from the app-managed session asset folder. It m
 
 ## Tracker API
 
-Status: planned for Phase 3. Tracker projection helpers exist, but tracker GM routes, tracker state validation, and tracker UI are not implemented yet.
+Status: implemented for Phase 3. Tracker GM routes and JSON APIs update in-memory state and return `autosaved: false` until local persistence exists.
 
 ### `POST /api/gm/session/<session_id>/trackers`
 

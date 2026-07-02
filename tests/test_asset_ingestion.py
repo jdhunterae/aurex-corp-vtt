@@ -2,6 +2,7 @@ from io import BytesIO
 from pathlib import Path
 
 import app.assets as assets
+import app.state as state
 from app.state import get_session, session_path
 
 
@@ -48,6 +49,29 @@ def test_uploaded_asset_can_be_selected_for_scene_and_served(client):
 
     assert scene.status_code == 200
     assert public_state["scene"]["image"]["id"] == asset_id
+    assert image_response.status_code == 200
+    assert image_response.data == PNG_BYTES
+
+
+def test_asset_serving_works_with_relative_runtime_data_dir(client, tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    state.DATA_DIR = Path("runtime-data")
+    state.SESSIONS_DIR = state.DATA_DIR / "sessions"
+
+    upload = client.post(
+        "/api/gm/session/relative-assets/assets/upload",
+        data={"image": (BytesIO(PNG_BYTES), "elevator.png")},
+        content_type="multipart/form-data",
+    )
+    asset_id = upload.json["asset"]["id"]
+    client.post(
+        "/api/gm/session/relative-assets/scene",
+        json={"title": "Elevator", "description": "Going down.", "image_asset_id": asset_id},
+    )
+
+    public_state = client.get("/api/s/relative-assets/public").json
+    image_response = client.get(public_state["scene"]["image"]["url"])
+
     assert image_response.status_code == 200
     assert image_response.data == PNG_BYTES
 

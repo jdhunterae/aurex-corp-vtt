@@ -14,6 +14,7 @@ from app.assets import (
 from app.projection import project_public_state
 from app.scenes import SceneValidationError, update_scene
 from app.state import get_session, load_or_create_session, session_path
+from app.trackers import TrackerValidationError, adjust_tracker, create_tracker, update_tracker
 
 
 def create_app() -> Flask:
@@ -109,6 +110,33 @@ def create_app() -> Flask:
             )
         return redirect(url_for("gm_session", session_id=session_id))
 
+    @app.post("/s/<session_id>/gm/trackers")
+    def gm_tracker_create(session_id: str):
+        session = get_session(session_id)
+        try:
+            create_tracker(session, tracker_form_payload(request.form))
+        except TrackerValidationError as error:
+            return render_gm_session_error(session, str(error))
+        return redirect(url_for("gm_session", session_id=session_id))
+
+    @app.post("/s/<session_id>/gm/trackers/<tracker_id>")
+    def gm_tracker_update(session_id: str, tracker_id: str):
+        session = get_session(session_id)
+        try:
+            update_tracker(session, tracker_id, tracker_form_payload(request.form))
+        except TrackerValidationError as error:
+            return render_gm_session_error(session, str(error))
+        return redirect(url_for("gm_session", session_id=session_id))
+
+    @app.post("/s/<session_id>/gm/trackers/<tracker_id>/adjust")
+    def gm_tracker_adjust(session_id: str, tracker_id: str):
+        session = get_session(session_id)
+        try:
+            adjust_tracker(session, tracker_id, request.form.get("delta", 0))
+        except TrackerValidationError as error:
+            return render_gm_session_error(session, str(error))
+        return redirect(url_for("gm_session", session_id=session_id))
+
     @app.get("/s/<session_id>/player")
     def player_view(session_id: str):
         session = get_session(session_id)
@@ -192,9 +220,39 @@ def create_app() -> Flask:
             return jsonify({"error": {"code": "invalid_asset_download", "message": str(error)}}), 400
         return jsonify({"duplicate": public_asset_response(duplicate) if duplicate else None})
 
+    @app.post("/api/gm/session/<session_id>/trackers")
+    def api_tracker_create(session_id: str):
+        session = get_session(session_id)
+        payload = request.get_json(silent=True) or {}
+        try:
+            tracker = create_tracker(session, payload)
+        except TrackerValidationError as error:
+            return jsonify({"error": {"code": "invalid_tracker_update", "message": str(error)}}), 400
+        return jsonify({"tracker": public_tracker_response(tracker), "autosaved": False})
+
+    @app.patch("/api/gm/session/<session_id>/trackers/<tracker_id>")
+    def api_tracker_update(session_id: str, tracker_id: str):
+        session = get_session(session_id)
+        payload = request.get_json(silent=True) or {}
+        try:
+            tracker = update_tracker(session, tracker_id, payload)
+        except TrackerValidationError as error:
+            return jsonify({"error": {"code": "invalid_tracker_update", "message": str(error)}}), 400
+        return jsonify({"tracker": public_tracker_response(tracker), "autosaved": False})
+
+    @app.post("/api/gm/session/<session_id>/trackers/<tracker_id>/adjust")
+    def api_tracker_adjust(session_id: str, tracker_id: str):
+        session = get_session(session_id)
+        payload = request.get_json(silent=True) or {}
+        try:
+            tracker = adjust_tracker(session, tracker_id, payload.get("delta", 0))
+        except TrackerValidationError as error:
+            return jsonify({"error": {"code": "invalid_tracker_update", "message": str(error)}}), 400
+        return jsonify({"tracker": public_tracker_response(tracker), "autosaved": False})
+
     @app.get("/assets/<session_id>/<asset_filename>")
     def serve_asset(session_id: str, asset_filename: str):
-        asset_dir = session_path(session_id) / "assets"
+        asset_dir = (session_path(session_id) / "assets").resolve()
         return send_from_directory(asset_dir, Path(asset_filename).name)
 
     @app.errorhandler(404)
@@ -215,3 +273,50 @@ def public_asset_response(asset):
         "mime_type": asset["mime_type"],
         "public_url": asset["public_url"],
     }
+
+
+def public_tracker_response(tracker):
+    return {
+        "id": tracker["id"],
+        "label": tracker["label"],
+        "value": tracker["value"],
+        "visible": tracker["visible"],
+        "mode": tracker["mode"],
+        "min_value": tracker["min_value"],
+        "max_value": tracker.get("max_value"),
+        "interval": tracker["interval"],
+        "display_mode": tracker["display_mode"],
+        "color_scale": tracker["color_scale"],
+        "named_values": tracker["named_values"],
+        "step_controls": tracker["step_controls"],
+    }
+
+
+def tracker_form_payload(form):
+    return {
+        "label": form.get("label", ""),
+        "value": form.get("value", 0),
+        "visible": form.get("visible", False),
+        "mode": form.get("mode", "bounded"),
+        "min_value": form.get("min_value", 0),
+        "max_value": form.get("max_value"),
+        "interval": form.get("interval", 1),
+        "display_mode": form.get("display_mode", "number"),
+        "color_scale": form.get("color_scale", "green_to_red"),
+        "named_values": form.get("named_values", ""),
+        "step_controls": form.get("step_controls", ""),
+        "gm_notes": form.get("gm_notes", ""),
+    }
+
+
+def render_gm_session_error(session, message):
+    public_state = project_public_state(session)
+    return (
+        render_template(
+            "gm_session.html",
+            error_message=message,
+            public_state=public_state,
+            session=session,
+        ),
+        400,
+    )

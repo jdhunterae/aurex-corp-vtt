@@ -37,6 +37,8 @@ Public Projection
 
 Player Browser
 
+The player browser must update automatically when the GM changes public state. Manual refresh is not an acceptable steady-state workflow for the MVP.
+
 ---
 
 ## Core Principles
@@ -50,6 +52,14 @@ The GM interface edits state through server-side routes and JSON endpoints.
 The player interface only receives public projected information.
 
 GM-only notes, original asset source URLs, local paths, hidden trackers, hidden combatants, hidden AC, hidden HP, and private save metadata must not reach player routes or player JSON.
+
+## Player Update Flow
+
+Every successful GM action that changes public state should become visible on the player display without manual player refresh.
+
+The update mechanism must preserve the public projection boundary. The player display may poll or subscribe to public projected state, but it must not receive full GM/session state.
+
+Initial MVP implementation should prefer the simplest reliable local-first mechanism, such as polling `/api/s/<session_id>/public`. WebSockets or server-sent events should be introduced only if the simpler approach is not adequate.
 
 ## Current Runtime Shape
 

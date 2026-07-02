@@ -94,6 +94,155 @@
         <p class="muted">No app-managed assets yet.</p>
       {% endif %}
     </section>
+
+    <section class="panel">
+      <h2>Trackers</h2>
+      <form class="control-form" action="{{ url_for('gm_tracker_create', session_id=session.id) }}" method="post">
+        <label>
+          <span>Label</span>
+          <input name="label" placeholder="Security Alert">
+        </label>
+        <div class="form-grid">
+          <label>
+            <span>Value</span>
+            <input name="value" type="number" value="0">
+          </label>
+          <label>
+            <span>Mode</span>
+            <select name="mode">
+              <option value="bounded">Bounded</option>
+              <option value="unbounded">Unbounded</option>
+            </select>
+          </label>
+          <label>
+            <span>Minimum</span>
+            <input name="min_value" type="number" value="0">
+          </label>
+          <label>
+            <span>Maximum</span>
+            <input name="max_value" type="number" value="10">
+          </label>
+          <label>
+            <span>Interval</span>
+            <input name="interval" type="number" value="1" min="1">
+          </label>
+          <label>
+            <span>Display</span>
+            <select name="display_mode">
+              <option value="number">Number</option>
+              <option value="label">Label</option>
+              <option value="label_color">Label + color</option>
+              <option value="number_label">Number + label</option>
+            </select>
+          </label>
+          <label>
+            <span>Color scale</span>
+            <select name="color_scale">
+              <option value="green_to_red">Green to red</option>
+              <option value="red_to_green">Red to green</option>
+              <option value="black_to_white">Black to white</option>
+              <option value="white_to_black">White to black</option>
+            </select>
+          </label>
+          <label class="checkbox-label">
+            <input name="visible" type="checkbox" checked>
+            <span>Visible to players</span>
+          </label>
+        </div>
+        <label>
+          <span>Named values</span>
+          <textarea name="named_values" rows="4" placeholder="Green&#10;Yellow&#10;Red"></textarea>
+        </label>
+        <label>
+          <span>Step controls</span>
+          <input name="step_controls" placeholder="-3, -1, 1, 3">
+        </label>
+        <button type="submit">Create Tracker</button>
+      </form>
+
+      {% if session.trackers %}
+        <div class="tracker-list">
+          {% for tracker in session.trackers %}
+            <section class="tracker-item">
+              <h3>{{ tracker.label }}</h3>
+              <form class="control-form" action="{{ url_for('gm_tracker_update', session_id=session.id, tracker_id=tracker.id) }}" method="post">
+                <label>
+                  <span>Label</span>
+                  <input name="label" value="{{ tracker.label }}">
+                </label>
+                <div class="form-grid">
+                  <label>
+                    <span>Value</span>
+                    <input name="value" type="number" value="{{ tracker.value }}">
+                  </label>
+                  <label>
+                    <span>Mode</span>
+                    <select name="mode">
+                      <option value="bounded" {% if tracker.mode == 'bounded' %}selected{% endif %}>Bounded</option>
+                      <option value="unbounded" {% if tracker.mode == 'unbounded' %}selected{% endif %}>Unbounded</option>
+                    </select>
+                  </label>
+                  <label>
+                    <span>Minimum</span>
+                    <input name="min_value" type="number" value="{{ tracker.min_value }}">
+                  </label>
+                  <label>
+                    <span>Maximum</span>
+                    <input name="max_value" type="number" value="{{ tracker.max_value if tracker.max_value is defined else '' }}">
+                  </label>
+                  <label>
+                    <span>Interval</span>
+                    <input name="interval" type="number" value="{{ tracker.interval }}" min="1">
+                  </label>
+                  <label>
+                    <span>Display</span>
+                    <select name="display_mode">
+                      <option value="number" {% if tracker.display_mode == 'number' %}selected{% endif %}>Number</option>
+                      <option value="label" {% if tracker.display_mode == 'label' %}selected{% endif %}>Label</option>
+                      <option value="label_color" {% if tracker.display_mode == 'label_color' %}selected{% endif %}>Label + color</option>
+                      <option value="number_label" {% if tracker.display_mode == 'number_label' %}selected{% endif %}>Number + label</option>
+                    </select>
+                  </label>
+                  <label>
+                    <span>Color scale</span>
+                    <select name="color_scale">
+                      <option value="green_to_red" {% if tracker.color_scale == 'green_to_red' %}selected{% endif %}>Green to red</option>
+                      <option value="red_to_green" {% if tracker.color_scale == 'red_to_green' %}selected{% endif %}>Red to green</option>
+                      <option value="black_to_white" {% if tracker.color_scale == 'black_to_white' %}selected{% endif %}>Black to white</option>
+                      <option value="white_to_black" {% if tracker.color_scale == 'white_to_black' %}selected{% endif %}>White to black</option>
+                    </select>
+                  </label>
+                  <label class="checkbox-label">
+                    <input name="visible" type="checkbox" {% if tracker.visible %}checked{% endif %}>
+                    <span>Visible to players</span>
+                  </label>
+                </div>
+                <label>
+                  <span>Named values</span>
+                  <textarea name="named_values" rows="4">{% for item in tracker.named_values %}{{ item.label }}{% if not loop.last %}
+{% endif %}{% endfor %}</textarea>
+                </label>
+                <label>
+                  <span>Step controls</span>
+                  <input name="step_controls" value="{{ tracker.step_controls | join(', ') }}">
+                </label>
+                <button type="submit">Update Tracker</button>
+              </form>
+              <div class="tracker-adjustments">
+                {% for delta in tracker.step_controls %}
+                  <form action="{{ url_for('gm_tracker_adjust', session_id=session.id, tracker_id=tracker.id) }}" method="post">
+                    <input name="delta" type="hidden" value="{{ delta }}">
+                    <button type="submit">{{ '%+d' | format(delta) }}</button>
+                  </form>
+                {% endfor %}
+              </div>
+            </section>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="muted">No trackers yet.</p>
+      {% endif %}
+    </section>
   </main>
   <script src="{{ url_for('static', filename='gm-session.js') }}"></script>
 {% endblock %}
