@@ -40,10 +40,11 @@ tests/
   test_scene_display.py
   test_asset_ingestion.py
   test_tracker_controls.py
+  test_tracker_display.py
   test_tracker_projection.py
 ```
 
-Future tracker player display, initiative, and persistence work should add focused test modules, such as `test_tracker_display.py`, `test_initiative.py`, and `test_persistence.py`, as those features are implemented. Tests should stay grouped by behavior rather than by UI page.
+Future player auto-refresh, initiative, and persistence work should add focused test modules, such as `test_player_refresh.py`, `test_initiative.py`, and `test_persistence.py`, as those features are implemented. Tests should stay grouped by behavior rather than by UI page.
 
 ## Projection Tests
 

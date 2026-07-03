@@ -4,9 +4,9 @@ The application has two interfaces.
 
 Current implementation status:
 
-- The player interface currently renders the public scene image, title, and description.
+- The player interface currently renders the public scene image, title, description, and public trackers.
 - The GM interface currently manages scene title, scene description, image asset selection by ID, image upload, image URL download, duplicate asset handling, and tracker controls.
-- Public tracker rendering, automatic player refresh, initiative controls, notes, quick actions, and persistence controls are planned for later phases.
+- Automatic player refresh, initiative controls, notes, quick actions, and persistence controls are planned for later phases.
 - The current GM controls are still too live-entry oriented. The target workflow is prep-first: build scenes, assets, and trackers before play, then use compact controls to change what players see during the session.
 
 ## Player
@@ -21,7 +21,7 @@ Goals
 Primary regions
 
 - Scene: implemented for Phase 2.
-- Public trackers: planned for Phase 3.
+- Public trackers: implemented for Phase 3.
 - Initiative: planned for Phase 4.
 
 ---

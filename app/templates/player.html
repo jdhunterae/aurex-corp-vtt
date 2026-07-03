@@ -29,5 +29,30 @@
         <p class="muted">Waiting for public session state.</p>
       {% endif %}
     </section>
+
+    {% if public_state.trackers %}
+      <section class="player-trackers" aria-label="Public trackers">
+        {% for tracker in public_state.trackers %}
+          <article class="player-tracker" data-tracker-id="{{ tracker.id }}">
+            <p class="tracker-label">{{ tracker.label }}</p>
+            {% if tracker.display_mode == 'label_color' %}
+              <p class="tracker-value">
+                <span class="tracker-color" style="background-color: {{ tracker.display.color }}"></span>
+                <span>{{ tracker.display.label }}</span>
+              </p>
+            {% elif tracker.display_mode == 'label' %}
+              <p class="tracker-value">{{ tracker.display.label }}</p>
+            {% elif tracker.display_mode == 'number_label' %}
+              <p class="tracker-value">
+                <span>{{ tracker.display.value }}</span>
+                <span class="tracker-subvalue">{{ tracker.display.label }}</span>
+              </p>
+            {% else %}
+              <p class="tracker-value">{{ tracker.display.value }}</p>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </section>
+    {% endif %}
   </main>
 {% endblock %}

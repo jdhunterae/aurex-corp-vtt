@@ -171,6 +171,7 @@ body {
 .player-display {
   min-height: 100vh;
   display: grid;
+  gap: 28px;
   place-items: center;
   padding: 32px;
 }
@@ -198,4 +199,53 @@ body {
   color: #d7dde3;
   font-size: 22px;
   line-height: 1.45;
+}
+
+.player-trackers {
+  width: min(1100px, 100%);
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.player-tracker {
+  border: 1px solid #3a4652;
+  border-radius: 8px;
+  background: #1a2027;
+  padding: 18px 20px;
+  text-align: center;
+}
+
+.tracker-label {
+  margin: 0 0 10px;
+  color: #aeb8c2;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.tracker-value {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0;
+  color: #f8fafc;
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+.tracker-subvalue {
+  color: #cbd5df;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.tracker-color {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  border: 2px solid #f8fafc;
+  border-radius: 50%;
 }
