@@ -19,7 +19,7 @@
 - Phase 0 planning tickets are complete.
 - Phase 1 application skeleton tickets are complete.
 - Phase 2 scene display tickets are complete.
-- Phase 3 generic tracker tickets are next.
+- Phase 3 generic trackers are in progress. Tracker model, state/projection, GM controls, and player rendering are complete; player auto-refresh is the next active ticket.
 - Phase 4 initiative and local save/load tickets remain backlog.
 
 ## MVP Boundary

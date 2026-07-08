@@ -24,6 +24,13 @@ Primary regions
 - Public trackers: implemented for Phase 3.
 - Initiative: planned for Phase 4.
 
+Frontend safety conventions:
+
+- Player JavaScript may fetch only public projection endpoints such as `/api/s/<session_id>/public`.
+- Player JavaScript must update the display from public projection payloads only.
+- Player pages must not load GM-only JavaScript, call GM APIs, or embed full session state in HTML.
+- Player-facing JavaScript must never receive hidden scenes, hidden trackers, GM notes, local paths, original asset source URLs, save metadata, GM keys, or other private state.
+
 ---
 
 ## GM
@@ -41,7 +48,7 @@ Scene controls should evolve from a single live-entry form into a prepared scene
 
 Tracker controls: implemented for Phase 3.
 
-Phase 3 tracker controls should support:
+Current tracker controls support:
 
 - Creating generic numeric trackers rather than specialized tracker types.
 - Editing label, value, visibility, bounds, interval, display mode, color scale, and named values.
@@ -49,11 +56,23 @@ Phase 3 tracker controls should support:
 - Larger adjustment buttons derived from the tracker interval or explicit `step_controls`.
 - Clear validation errors on the GM session page.
 
+Remaining Phase 3 workflow gaps:
+
+- Player auto-refresh after GM public-state changes.
+- A more compact GM layout that separates setup/editing from live controls.
+- A prepared scene library so scene switching does not require live retyping.
+
 Initiative controls: planned for Phase 4.
 
 Notes: planned.
 
 Quick actions: planned.
+
+Frontend safety conventions:
+
+- GM JavaScript may call GM routes and GM JSON APIs when needed for controls and previews.
+- GM-only JavaScript must be loaded only by GM pages.
+- Shared JavaScript should be treated as player-safe by default; if it needs GM data or GM endpoints, keep it in a GM-only file.
 
 ---
 

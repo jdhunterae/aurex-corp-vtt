@@ -64,7 +64,7 @@ Deliverables
 
 Follow-up tickets:
 
-- P02-005 Fix Player Asset Rendering
+- P02-005 Fix Player Asset Rendering - Done
 - P02-006 Add Prepared Scene Library
 
 ---
@@ -73,7 +73,7 @@ Follow-up tickets:
 
 Generic Trackers
 
-Status: Next
+Status: In Progress
 
 Goal:
 
@@ -86,16 +86,20 @@ Examples
 - Countdown
 - Party Gold
 
-Initial tickets:
+Tickets:
 
-- P03-001 Define Generic Tracker Model
-- P03-002 Add Tracker State and Projection
-- P03-003 Add Tracker GM Controls
-- P03-004 Add Tracker Player Display
-- P03-005 Add Player Auto Refresh
-- P03-006 Redesign GM Control Layout
+- [x] P03-001 Define Generic Tracker Model
+- [x] P03-002 Add Tracker State and Projection
+- [x] P03-003 Add Tracker GM Controls
+- [x] P03-004 Add Tracker Player Display
+- [ ] P03-005 Add Player Auto Refresh
+- [ ] P03-006 Redesign GM Control Layout
 
 Phase 3 should not be considered usable until the player display automatically reflects GM changes without manual refresh.
+
+Current active ticket:
+
+- P03-005 Add Player Auto Refresh
 
 ---
 

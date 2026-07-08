@@ -12,7 +12,7 @@ Current implementation status:
 
 - Phase 1 application skeleton is complete.
 - Phase 2 scene display is complete.
-- Phase 3 generic trackers are next.
+- Phase 3 generic trackers are in progress: tracker state, projection, GM controls, and player rendering are implemented; player auto-refresh remains the next required usability milestone.
 - Phase 4 initiative and local save/load persistence remain backlog.
 
 ---

@@ -98,6 +98,14 @@ Examples:
 
 Do not treat `.brainstorming/` files as binding requirements unless the user explicitly promotes them into `docs/` or `.project-board/`.
 
+For project maintenance audits, use this filename unless the user requests a different name:
+
+```text
+.brainstorming/project-audit-YYYY-MM-DD.md
+```
+
+Audit reports should separate findings from proposed changes, list verification commands run, and clearly state whether any files were modified beyond the report itself.
+
 ### `.project-board/`
 
 Use `.project-board/` for local markdown tickets, similar to a minimalist Jira board.

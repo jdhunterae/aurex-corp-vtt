@@ -19,9 +19,18 @@ The MVP uses Flask as a minimal wrapper for routes, templates, static files, JSO
 - Never return full session state from player routes.
 - Never expose local paths, original image URLs, hidden notes, hidden trackers, hidden combatants, hidden AC, or hidden HP to players.
 
+## Route Conventions
+
+- GM page and form routes use `/s/<session_id>/gm/...`.
+- GM JSON APIs use `/api/gm/session/<session_id>/...`.
+- Player page routes use `/s/<session_id>/player`.
+- Player JSON routes use `/api/s/<session_id>/public` or another explicit public projection endpoint.
+- Player pages and player JavaScript must not call GM routes or GM JSON APIs.
+- The bare session route redirects to the player route because it is the safer default surface.
+
 Current implementation status:
 
-- Phase 1 and Phase 2 page routes, public projection, scene update, asset upload, asset URL download, duplicate preview, and app-managed asset serving are implemented.
+- Phase 1 and Phase 2 page routes, public projection, scene update, asset upload, asset URL download, duplicate preview, app-managed asset serving, and Phase 3 tracker routes are implemented.
 - Initiative, GM session listing/creation, full GM session API, and persistence APIs remain planned work.
 - JSON responses currently return `"autosaved": false` for implemented GM mutations because local persistence is not implemented yet.
 
@@ -46,6 +55,17 @@ The bare session route uses the safer player view by default.
 Returns the GM control interface for a foldered session.
 
 This page may load full GM state through GM API endpoints.
+
+Implemented GM form routes:
+
+- `POST /s/<session_id>/gm/scene`
+- `POST /s/<session_id>/gm/assets/upload`
+- `POST /s/<session_id>/gm/assets/download`
+- `POST /s/<session_id>/gm/trackers`
+- `POST /s/<session_id>/gm/trackers/<tracker_id>`
+- `POST /s/<session_id>/gm/trackers/<tracker_id>/adjust`
+
+Current form routes mutate in-memory state and redirect back to the GM session page on success. On validation failure, they re-render the GM session page with HTTP 400 and a visible error message.
 
 ### `GET /s/<session_id>/player`
 
@@ -224,6 +244,34 @@ Example response:
 }
 ```
 
+### `POST /api/gm/session/<session_id>/assets/upload/preview`
+
+Checks whether an uploaded image appears to match an existing app-managed asset.
+
+Request type: multipart form upload.
+
+Example response when a duplicate is found:
+
+```json
+{
+  "duplicate": {
+    "id": "asset-001",
+    "kind": "image",
+    "display_name": "Cavern Entrance",
+    "mime_type": "image/png",
+    "public_url": "/assets/session-001/asset-001.png"
+  }
+}
+```
+
+Example response when no duplicate is found:
+
+```json
+{
+  "duplicate": null
+}
+```
+
 ### `POST /api/gm/session/<session_id>/assets/download`
 
 Downloads an image URL immediately into app-managed session assets.
@@ -251,6 +299,26 @@ Example response:
     "public_url": "/assets/session-001/asset-001.png"
   },
   "autosaved": false
+}
+```
+
+### `POST /api/gm/session/<session_id>/assets/download/preview`
+
+Downloads and checks an image URL for duplicate content without registering a new asset.
+
+Example request:
+
+```json
+{
+  "url": "https://example.test/cavern.png"
+}
+```
+
+Response shape matches the upload preview endpoint:
+
+```json
+{
+  "duplicate": null
 }
 ```
 
@@ -310,11 +378,29 @@ Example response:
 {
   "tracker": {
     "id": "tracker-001",
-    "label": "Security Alert"
+    "label": "Security Alert",
+    "value": 1,
+    "visible": true,
+    "mode": "bounded",
+    "min_value": 1,
+    "max_value": 15,
+    "interval": 3,
+    "display_mode": "label_color",
+    "color_scale": "green_to_red",
+    "named_values": [
+      { "label": "Green", "color": null },
+      { "label": "Yellow", "color": null },
+      { "label": "Orange", "color": null },
+      { "label": "Red", "color": null },
+      { "label": "Black", "color": null }
+    ],
+    "step_controls": [-2, -1, 1, 2]
   },
   "autosaved": false
 }
 ```
+
+Tracker JSON responses intentionally omit `gm_notes` and any future GM-only tracker metadata.
 
 ### `PATCH /api/gm/session/<session_id>/trackers/<tracker_id>`
 
@@ -324,11 +410,26 @@ Example request:
 
 ```json
 {
+  "label": "Security Alert",
+  "mode": "bounded",
+  "min_value": 1,
+  "max_value": 15,
   "value": 5,
+  "interval": 3,
   "visible": true,
-  "display_mode": "label"
+  "display_mode": "label",
+  "color_scale": "green_to_red",
+  "named_values": [
+    { "label": "Green" },
+    { "label": "Yellow" },
+    { "label": "Orange" },
+    { "label": "Red" },
+    { "label": "Black" }
+  ]
 }
 ```
+
+The current implementation validates a complete tracker payload on update. Clients should send the full editable tracker definition, not only changed fields.
 
 ### `POST /api/gm/session/<session_id>/trackers/<tracker_id>/adjust`
 
@@ -339,6 +440,34 @@ Example request:
 ```json
 {
   "delta": 1
+}
+```
+
+Example response:
+
+```json
+{
+  "tracker": {
+    "id": "tracker-001",
+    "label": "Security Alert",
+    "value": 6,
+    "visible": true,
+    "mode": "bounded",
+    "min_value": 1,
+    "max_value": 15,
+    "interval": 3,
+    "display_mode": "label_color",
+    "color_scale": "green_to_red",
+    "named_values": [
+      { "label": "Green", "color": null },
+      { "label": "Yellow", "color": null },
+      { "label": "Orange", "color": null },
+      { "label": "Red", "color": null },
+      { "label": "Black", "color": null }
+    ],
+    "step_controls": [-2, -1, 1, 2]
+  },
+  "autosaved": false
 }
 ```
 
@@ -532,6 +661,42 @@ Example request:
 Status: planned. Implemented GM mutation endpoints currently return `"autosaved": false`.
 
 Every successful GM state-changing endpoint should trigger autosave.
+
+Until persistence is implemented, successful GM mutation responses should include:
+
+```json
+{
+  "autosaved": false
+}
+```
+
+Once persistence is implemented, successful GM mutation responses should include autosave metadata:
+
+```json
+{
+  "autosaved": true,
+  "autosave": {
+    "id": "autosave-1",
+    "save_kind": "autosave",
+    "saved_at": "2026-07-08T20:15:00Z",
+    "label": "Most recent autosave"
+  }
+}
+```
+
+If the state mutation succeeds but autosave fails, the endpoint must not claim autosave succeeded. It should return the mutation result with `"autosaved": false` and an `autosave_error` object:
+
+```json
+{
+  "autosaved": false,
+  "autosave_error": {
+    "code": "autosave_failed",
+    "message": "Autosave failed. Session state changed in memory but was not saved to disk."
+  }
+}
+```
+
+Autosave failures should be visible to the GM. They must not expose local filesystem paths or private save metadata to player routes.
 
 Autosave slots:
 

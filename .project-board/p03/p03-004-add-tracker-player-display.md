@@ -28,7 +28,7 @@ Render public trackers on the passive player display using only the public state
 
 Depends on P03-002.
 
-The current Phase 2 player template renders scene content only. As observed during Phase 3 smoke testing, visible trackers created by the GM do not appear on the player view yet. This ticket adds the player-facing tracker widget area after tracker state and projection behavior are finalized.
+Historical context: before this ticket, the Phase 2 player template rendered scene content only and visible trackers created by the GM did not appear on the player view.
 
 The player display must consume `public_state.trackers`; it must not receive or inspect the full session tracker state.
 

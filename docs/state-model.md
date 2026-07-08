@@ -568,10 +568,15 @@ Autosave behavior is part of persistence, but save metadata affects the state mo
   "id": "autosave-1",
   "save_kind": "autosave",
   "created_at": "2026-06-29T20:15:00Z",
+  "saved_at": "2026-06-29T20:15:00Z",
   "label": "Most recent autosave",
   "path": "autosaves/autosave-1.json"
 }
 ```
+
+`created_at` records when the save slot or manual save record was created. `saved_at` records when the save file was last written. For autosave slots these values may differ after rotation or replacement.
+
+GM API responses may return public-safe save metadata such as `id`, `save_kind`, `saved_at`, and `label`. They should not return local filesystem paths to player routes, and player public projection should not include save metadata.
 
 Autosave slots:
 

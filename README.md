@@ -17,56 +17,30 @@ Unlike traditional VTTs, Aurex Corp VTT is intentionally minimal. It is designed
 
 ## Current Status
 
-Phase 2 — Scene Display Complete
+Phase 3 — Generic Trackers In Progress
 
-The repository contains a working Flask application with GM and player pages, an explicit public-state projection layer, scene display controls, and app-managed scene image asset ingestion.
+The repository contains a working Flask application with GM and player pages, an explicit public-state projection layer, scene display controls, app-managed scene image asset ingestion, and generic tracker controls/rendering. Player auto-refresh is the next Phase 3 usability milestone.
 
-Development is currently ready to begin Phase 3: Generic Trackers.
-
-Implemented today:
-
-- Local Flask server and app factory.
-- GM home page and per-session GM control page.
-- Passive player display backed by public projected state.
-- Public JSON endpoint that excludes GM-only state.
-- Scene title, description, and image display.
-- GM scene controls.
-- Image upload into app-managed session assets.
-- Image URL download into app-managed session assets.
-- Duplicate image detection with GM choice to reuse or keep a separate copy.
-- Tests for routes, projection safety, scene controls, scene display, and asset ingestion.
-
-Not implemented yet:
-
-- Generic tracker GM controls and player rendering.
-- Initiative GM controls and player rendering.
-- Local save/load persistence and autosave.
-- Session listing/creation UI beyond direct session URLs.
+For detailed status, see `/docs/roadmap.md` and `/docs/changelog.md`.
 
 Key planning docs:
 
 - `/docs/roadmap.md`
+- `/docs/changelog.md`
 - `/docs/architecture.md`
 - `/docs/state-model.md`
 - `/docs/api.md`
+- `/docs/developer-setup.md`
 - `/docs/testing.md`
 - `/.project-board/`
-
-## Planned Features
-
-- Scene display: complete for the current MVP phase
-- Generic counters and trackers: next phase
-- Initiative tracker
-- Public/GM visibility controls
-- GM notes
-- Local save/load
-- Future session sharing beyond the local MVP
 
 ## Roadmap
 
 See `/docs/roadmap.md`
 
 ## Quick Start
+
+For more detail, see `/docs/developer-setup.md`.
 
 Create a local virtual environment:
 

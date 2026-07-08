@@ -1,5 +1,21 @@
 # Changelog
 
+## Phase 3
+
+### Generic Trackers
+
+- Added generic tracker state helpers for bounded and unbounded numeric trackers.
+- Added tracker validation for labels, values, bounds, intervals, display modes, color scales, named values, and step controls.
+- Added public tracker projection for number, label, label_color, and number_label display modes.
+- Added GM tracker create, update, and adjustment controls.
+- Added player tracker rendering backed only by public projected state.
+- Added route, projection, control, and display tests for tracker behavior.
+
+Remaining Phase 3 work:
+
+- Add player auto-refresh after GM public-state changes.
+- Redesign the GM control layout for faster live-session use.
+
 ## Phase 2
 
 ### Scene Display

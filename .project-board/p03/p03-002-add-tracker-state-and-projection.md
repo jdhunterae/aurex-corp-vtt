@@ -31,8 +31,8 @@ Complete tracker state and public projection behavior.
 
 Depends on P03-001 and P01-004.
 
-`app/state.py` already initializes `trackers` as an empty list, and `app/projection.py` already contains basic tracker projection helpers. Current helper coverage is partial: hidden trackers and one `label_color` interval case are tested, but default color scale derivation, all display modes, malformed optional fields, and validation boundaries still need Phase 3 work.
+Historical context: before this ticket, `app/state.py` initialized `trackers` as an empty list and `app/projection.py` contained only partial tracker projection helper coverage.
 
 This ticket should preserve the player safety boundary from Phase 1: hidden trackers, GM notes, local paths, and any private tracker fields must not appear in `/api/s/<session_id>/public`.
 
-Completed in `app/projection.py` with coverage in `tests/test_tracker_projection.py`.
+Completed in `app/projection.py` with focused coverage in `tests/test_tracker_projection.py`.
