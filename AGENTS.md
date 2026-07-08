@@ -38,6 +38,7 @@ Expected top-level structure:
 ```text
 app/                  Application package and server code
 docs/                 Stable project documentation
+.ai-context/          Stable AI-agent project guidance
 .brainstorming/       Agent scratch work, audits, analysis, and temporary planning notes
 .project-board/       Local markdown project-board tickets organized by phase
 AGENTS.md             Instructions for AI coding agents
@@ -49,6 +50,23 @@ pyproject.toml        Python project metadata/configuration, if used
 ## Documentation Boundaries
 
 Use the right location for each kind of writing:
+
+### `.ai-context/`
+
+Use `.ai-context/` for stable, concise AI-agent guidance that should be consulted before making changes.
+
+Current files:
+
+- `.ai-context/architecture.md`
+- `.ai-context/terminology.md`
+- `.ai-context/ui-conventions.md`
+- `.ai-context/coding-style.md`
+- `.ai-context/testing.md`
+- `.ai-context/prompt-library.md`
+
+Before changing code, tests, UI, routes, docs, or tickets, read the relevant `.ai-context/` file(s) along with `AGENTS.md` and the source docs or tickets for the task.
+
+Keep `.ai-context/` practical and derived from maintained project knowledge. Do not use it for speculative brainstorming; use `.brainstorming/` for that.
 
 ### `docs/`
 
