@@ -41,6 +41,8 @@ Purpose: capture current implementation style and coding constraints for AI agen
 - Runtime dependencies are in `requirements.txt`.
 - Current dependencies: Flask and pytest.
 - `pyproject.toml` contains project metadata and pytest test discovery.
+- No formatter or linter is currently configured.
+- Linting is considered a human-readability and structure decision, not intentionally absent by policy.
 - Do not add package managers, build tools, async workers, WebSockets, authentication, or databases without explicit approval.
 
 ## File Boundaries
@@ -51,5 +53,5 @@ Purpose: capture current implementation style and coding constraints for AI agen
 - Stable AI-agent guidance lives in `.ai-context/`.
 - Runtime data lives in `data/` and must not be committed.
 
-TODO: Decide whether to add formatting/linting tools later. None are configured now.
+TODO: Decide a firm formatter/linter policy: add specific tooling, or explicitly keep the project without linting for now.
 TODO: Decide whether to migrate dependencies into `pyproject.toml` later. The current workflow keeps them in `requirements.txt`.

@@ -5,8 +5,8 @@ Purpose: define project terms so AI agents use consistent names in code, docs, t
 ## Surfaces
 
 - GM interface: the read/write control surface for managing session state.
-- Player interface: the passive/read-only display of public projected state.
-- Player display: the same concept as player interface when referring to the rendered room-facing screen.
+- Player display: preferred term for the passive/read-only display of public projected state.
+- Player interface: avoid when possible because it implies player interaction.
 
 ## State Terms
 
@@ -46,5 +46,4 @@ Purpose: define project terms so AI agents use consistent names in code, docs, t
 - Blocked: waiting on a stated dependency or decision.
 - Done: completed and retained for history.
 
-TODO: Decide whether "player interface" or "player display" should be preferred in user-facing docs.
 TODO: Decide final terminology for health "vibe" bands before Phase 4 UI work.

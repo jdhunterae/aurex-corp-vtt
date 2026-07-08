@@ -47,6 +47,22 @@ requirements.txt      Python dependencies, if any
 pyproject.toml        Python project metadata/configuration, if used
 ```
 
+## AI Playbooks
+
+Recurring AI-assisted workflows live under `.ai-context/playbooks/`.
+
+Playbooks are standard operating procedures for Codex and other AI agents. They describe how to perform recurring project activities; they are not brainstorming notes, tickets, or human-facing documentation.
+
+Before beginning a new work session, consult:
+
+```text
+.ai-context/playbooks/session-start.md
+```
+
+Use that playbook to establish current context, identify the active phase or ticket, and produce a short startup brief before making changes.
+
+When a task materially changes architecture, terminology, coding conventions, testing strategy, UI conventions, or recurring workflows, mention whether the relevant `.ai-context/` file or playbook should be updated. Do not make broad documentation maintenance changes unless the user requested them or they are directly necessary for the task.
+
 ## Documentation Boundaries
 
 Use the right location for each kind of writing:
@@ -63,6 +79,8 @@ Current files:
 - `.ai-context/coding-style.md`
 - `.ai-context/testing.md`
 - `.ai-context/prompt-library.md`
+- `.ai-context/playbooks/README.md`
+- `.ai-context/playbooks/session-start.md`
 
 Before changing code, tests, UI, routes, docs, or tickets, read the relevant `.ai-context/` file(s) along with `AGENTS.md` and the source docs or tickets for the task.
 
