@@ -7,14 +7,14 @@ Aurex Corp VTT is a local-first, minimal virtual tabletop for Dungeons & Dragons
 The application has two major user-facing surfaces:
 
 - **GM interface:** read/write controls for managing the session.
-- **Player interface:** read-only display of public projected state.
+- **Player display:** read-only display of public projected state.
 
 The project should remain intentionally small, understandable, and easy to run locally.
 Do not turn this into a full Foundry/Roll20 replacement unless explicitly asked.
 
 ## Core Safety Rule
 
-Player views must receive only public projected state.
+Player display views must receive only public projected state.
 Never expose hidden GM notes, private state, unrevealed monsters, secret counters, GM-only scene data, keys, tokens, or local file paths through player routes, player API payloads, static files, or client-side JavaScript.
 
 When in doubt, create an explicit public-state projection layer instead of sharing full state with the frontend.
@@ -71,16 +71,7 @@ Use the right location for each kind of writing:
 
 Use `.ai-context/` for stable, concise AI-agent guidance that should be consulted before making changes.
 
-Current files:
-
-- `.ai-context/architecture.md`
-- `.ai-context/terminology.md`
-- `.ai-context/ui-conventions.md`
-- `.ai-context/coding-style.md`
-- `.ai-context/testing.md`
-- `.ai-context/prompt-library.md`
-- `.ai-context/playbooks/README.md`
-- `.ai-context/playbooks/session-start.md`
+For the current file list and maintenance guidance, see `.ai-context/README.md`.
 
 Before changing code, tests, UI, routes, docs, or tickets, read the relevant `.ai-context/` file(s) along with `AGENTS.md` and the source docs or tickets for the task.
 
@@ -216,7 +207,7 @@ If the requested work does not match the current phase, mention that briefly and
 - Keep the player display passive/read-only.
 - Backend owns canonical state.
 - GM actions should update state through clear server-side routes or APIs.
-- Player routes should consume filtered public state only.
+- Player display routes should consume filtered public state only.
 - Avoid global hidden state leaking into templates or JSON responses.
 - Prefer explicit functions for state projection and validation.
 - Keep routes small and easy to test.
@@ -232,7 +223,7 @@ If the requested work does not match the current phase, mention that briefly and
 
 ## Frontend Rules
 
-- Keep the player UI readable from across a room.
+- Keep the player display readable from across a room.
 - Keep the GM UI fast and practical over decorative.
 - Avoid frontend frameworks unless explicitly requested.
 - Avoid complex build steps while the app is still small.

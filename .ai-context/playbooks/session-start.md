@@ -18,6 +18,18 @@ Use this playbook when:
 
 Do not use this playbook as a substitute for focused task analysis. It prepares the session; it does not perform the work.
 
+## When To Skip Or Compress
+
+Skip or compress the startup brief when the user gives a narrow direct request and the relevant context is already loaded in the current conversation.
+
+Examples:
+
+- The user asks for a small follow-up edit to files already being discussed.
+- The user asks for a commit of already reviewed changes.
+- The user asks to continue the immediately preceding task.
+
+In these cases, keep following `AGENTS.md` and relevant `.ai-context/` guidance, but a one-sentence status note is enough before proceeding.
+
 ## Procedure
 
 ### 1. Read Core Instructions
