@@ -10,7 +10,7 @@ Phase 0 - Project Planning and Architecture
 
 ## Goal
 
-Define the explicit public-state payload consumed by the player interface.
+Define the explicit public-state payload consumed by the player display.
 
 ## Acceptance Criteria
 

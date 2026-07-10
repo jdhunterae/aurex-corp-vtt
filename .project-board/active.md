@@ -4,11 +4,10 @@ This file is a quick index of current actionable work. Full scope and acceptance
 
 ## Current Focus
 
-- `P03-005 Add Player Auto Refresh` - Ready
+- `P03-006 Redesign GM Control Layout` - Backlog
 
 ## Near-Term Backlog
 
-- `P03-006 Redesign GM Control Layout` - Backlog, depends on P03-005.
 - `P02-006 Add Prepared Scene Library` - Backlog, improves the scene workflow after the current single live-entry scene form.
 
 ## Phase 4 Backlog

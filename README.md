@@ -19,7 +19,7 @@ Unlike traditional VTTs, Aurex Corp VTT is intentionally minimal. It is designed
 
 Phase 3 — Generic Trackers In Progress
 
-The repository contains a working Flask application with GM and player pages, an explicit public-state projection layer, scene display controls, app-managed scene image asset ingestion, and generic tracker controls/rendering. Player auto-refresh is the next Phase 3 usability milestone.
+The repository contains a working Flask application with GM and player pages, an explicit public-state projection layer, scene display controls, app-managed scene image asset ingestion, generic tracker controls/rendering, and player auto-refresh. GM control layout polish is the next Phase 3 usability milestone.
 
 For detailed status, see `/docs/roadmap.md` and `/docs/changelog.md`.
 

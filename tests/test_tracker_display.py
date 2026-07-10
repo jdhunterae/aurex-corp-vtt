@@ -67,8 +67,9 @@ def test_player_page_does_not_render_empty_tracker_placeholder(client):
     body = response.get_data(as_text=True)
 
     assert response.status_code == 200
-    assert "Public trackers" not in body
-    assert "player-tracker" not in body
+    assert 'aria-label="Public trackers"' in body
+    assert "hidden" in body
+    assert 'class="player-tracker"' not in body
 
 
 def test_player_page_excludes_hidden_and_private_tracker_fields(client):

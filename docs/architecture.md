@@ -12,7 +12,7 @@ Current implementation status:
 
 - Phase 1 application skeleton is complete.
 - Phase 2 scene display is complete.
-- Phase 3 generic trackers are in progress: tracker state, projection, GM controls, and player rendering are implemented; player auto-refresh remains the next required usability milestone.
+- Phase 3 generic trackers are in progress: tracker state, projection, GM controls, player rendering, and player auto-refresh are implemented; GM control layout polish remains.
 - Phase 4 initiative and local save/load persistence remain backlog.
 
 ---
@@ -45,11 +45,11 @@ The player browser must update automatically when the GM changes public state. M
 
 The backend owns all state.
 
-The player interface never modifies state.
+The player display never modifies state.
 
 The GM interface edits state through server-side routes and JSON endpoints.
 
-The player interface only receives public projected information.
+The player display only receives public projected information.
 
 GM-only notes, original asset source URLs, local paths, hidden trackers, hidden combatants, hidden AC, hidden HP, and private save metadata must not reach player routes or player JSON.
 

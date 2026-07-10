@@ -21,6 +21,7 @@ Purpose: summarize practical UI rules for future AI sessions working on template
 - If player auto-refresh polling fails, keep the current display visible and non-interrupted.
 - Show a temporary popup/popdown indicator that the display may be out of date.
 - The failure indicator should include a countdown until the next attempted update.
+- Initial player auto-refresh polling interval is 5 seconds.
 
 ## GM UI
 
@@ -45,4 +46,3 @@ Purpose: summarize practical UI rules for future AI sessions working on template
 
 TODO: Decide the final GM control layout for `P03-006`.
 TODO: Decide whether prepared scene library UI should be a separate panel, tabbed section, or compact selector.
-TODO: Decide polling interval for `P03-005` player auto-refresh.

@@ -8,8 +8,9 @@
     class="player-display"
     data-session-id="{{ session_id }}"
     data-public-state-url="{{ public_state_url }}"
+    data-refresh-interval-ms="5000"
   >
-    <section class="player-scene" aria-live="polite">
+    <section class="player-scene" data-player-scene aria-live="polite">
       {% if public_state.scene %}
         {% if public_state.scene.image %}
           <img
@@ -30,8 +31,13 @@
       {% endif %}
     </section>
 
-    {% if public_state.trackers %}
-      <section class="player-trackers" aria-label="Public trackers">
+    <section
+      class="player-trackers"
+      data-player-trackers
+      aria-label="Public trackers"
+      {% if not public_state.trackers %}hidden{% endif %}
+    >
+      {% if public_state.trackers %}
         {% for tracker in public_state.trackers %}
           <article class="player-tracker" data-tracker-id="{{ tracker.id }}">
             <p class="tracker-label">{{ tracker.label }}</p>
@@ -52,7 +58,12 @@
             {% endif %}
           </article>
         {% endfor %}
-      </section>
-    {% endif %}
+      {% endif %}
+    </section>
+
+    <div class="refresh-warning" data-refresh-warning hidden role="status" aria-live="polite">
+      Display may be out of date. Retrying in <span data-refresh-countdown>5</span>s.
+    </div>
   </main>
+  <script src="{{ url_for('static', filename='player-display.js') }}"></script>
 {% endblock %}

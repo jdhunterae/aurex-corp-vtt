@@ -1,12 +1,12 @@
 # UI Concepts
 
-The application has two interfaces.
+The application has a GM interface and a passive player display.
 
 Current implementation status:
 
-- The player interface currently renders the public scene image, title, description, and public trackers.
+- The player display currently renders the public scene image, title, description, and public trackers.
 - The GM interface currently manages scene title, scene description, image asset selection by ID, image upload, image URL download, duplicate asset handling, and tracker controls.
-- Automatic player refresh, initiative controls, notes, quick actions, and persistence controls are planned for later phases.
+- Automatic player refresh is implemented. Initiative controls, notes, quick actions, and persistence controls are planned for later phases.
 - The current GM controls are still too live-entry oriented. The target workflow is prep-first: build scenes, assets, and trackers before play, then use compact controls to change what players see during the session.
 
 ## Player
@@ -58,7 +58,6 @@ Current tracker controls support:
 
 Remaining Phase 3 workflow gaps:
 
-- Player auto-refresh after GM public-state changes.
 - A more compact GM layout that separates setup/editing from live controls.
 - A prepared scene library so scene switching does not require live retyping.
 

@@ -92,14 +92,14 @@ Tickets:
 - [x] P03-002 Add Tracker State and Projection
 - [x] P03-003 Add Tracker GM Controls
 - [x] P03-004 Add Tracker Player Display
-- [ ] P03-005 Add Player Auto Refresh
+- [x] P03-005 Add Player Auto Refresh
 - [ ] P03-006 Redesign GM Control Layout
 
-Phase 3 should not be considered usable until the player display automatically reflects GM changes without manual refresh.
+Phase 3 has a usable player display: public scene and tracker changes now refresh automatically from the public projection endpoint.
 
 Current active ticket:
 
-- P03-005 Add Player Auto Refresh
+- P03-006 Redesign GM Control Layout
 
 ---
 

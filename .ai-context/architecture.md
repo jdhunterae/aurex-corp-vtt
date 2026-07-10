@@ -8,7 +8,7 @@ Purpose: give AI agents a concise, stable map of the current application archite
 - The backend owns canonical session state.
 - The app has two user-facing surfaces:
   - GM interface: read/write controls.
-  - Player interface: passive/read-only public display.
+  - Player display: passive/read-only public display.
 - Player-facing routes and payloads must consume public projected state only.
 - Current runtime state is in-memory, with project-local session folders bootstrapped under `data/sessions/`.
 - App-managed scene assets are stored under `data/sessions/<session_id>/assets/`.
