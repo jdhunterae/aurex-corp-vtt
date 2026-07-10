@@ -109,6 +109,28 @@ def test_gm_tracker_form_creates_tracker(client):
     assert "+2" in body
 
 
+def test_gm_tracker_form_redirects_to_tracker_panel(client):
+    response = client.post(
+        "/s/form-tracker-scroll/gm/trackers",
+        data={
+            "label": "Security Alert",
+            "value": "1",
+            "visible": "on",
+            "mode": "bounded",
+            "min_value": "1",
+            "max_value": "15",
+            "interval": "3",
+            "display_mode": "label_color",
+            "color_scale": "green_to_red",
+            "named_values": "Green\nYellow\nRed",
+            "step_controls": "",
+        },
+    )
+
+    assert response.status_code == 302
+    assert response.headers["location"] == "/s/form-tracker-scroll/gm#trackers-panel"
+
+
 def test_gm_tracker_form_renders_validation_error(client):
     response = client.post(
         "/s/form-tracker-error/gm/trackers",
@@ -127,6 +149,7 @@ def test_gm_tracker_form_renders_validation_error(client):
 
     assert response.status_code == 400
     assert "Tracker label is required." in body
+    assert 'action="/s/form-tracker-error/gm/trackers#trackers-panel"' in body
 
 
 def test_gm_tracker_adjust_form_updates_value(client):
@@ -157,3 +180,59 @@ def test_gm_tracker_adjust_form_updates_value(client):
 
     assert response.status_code == 200
     assert 'name="value" type="number" value="2"' in body
+
+
+def test_gm_tracker_forms_target_existing_tracker(client):
+    session = get_session("form-tracker-item-scroll")
+    session["trackers"].append(
+        {
+            "id": "tracker-1",
+            "label": "Round",
+            "value": 1,
+            "visible": True,
+            "mode": "unbounded",
+            "min_value": 1,
+            "interval": 1,
+            "display_mode": "number",
+            "color_scale": "green_to_red",
+            "named_values": [],
+            "step_controls": [-1, 1],
+            "gm_notes": "",
+        }
+    )
+
+    response = client.get("/s/form-tracker-item-scroll/gm")
+    body = response.get_data(as_text=True)
+
+    assert response.status_code == 200
+    assert 'class="tracker-item" id="tracker-1"' in body
+    assert 'action="/s/form-tracker-item-scroll/gm/trackers/tracker-1#tracker-1"' in body
+    assert 'action="/s/form-tracker-item-scroll/gm/trackers/tracker-1/adjust#tracker-1"' in body
+
+
+def test_gm_tracker_adjust_redirects_to_existing_tracker(client):
+    session = get_session("form-tracker-adjust-scroll")
+    session["trackers"].append(
+        {
+            "id": "tracker-1",
+            "label": "Round",
+            "value": 1,
+            "visible": True,
+            "mode": "unbounded",
+            "min_value": 1,
+            "interval": 1,
+            "display_mode": "number",
+            "color_scale": "green_to_red",
+            "named_values": [],
+            "step_controls": [-1, 1],
+            "gm_notes": "",
+        }
+    )
+
+    response = client.post(
+        "/s/form-tracker-adjust-scroll/gm/trackers/tracker-1/adjust",
+        data={"delta": "1"},
+    )
+
+    assert response.status_code == 302
+    assert response.headers["location"] == "/s/form-tracker-adjust-scroll/gm#tracker-1"

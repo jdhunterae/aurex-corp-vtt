@@ -2,7 +2,7 @@
 
 ## Status
 
-Backlog
+Done
 
 ## Phase
 
@@ -14,13 +14,13 @@ Keep the GM and player displays from unexpectedly losing their scroll position a
 
 ## Acceptance Criteria
 
-- [ ] After a GM scene, asset, or tracker form submission, the GM page returns to the relevant area instead of always landing at the top of the page.
-- [ ] Repeated tracker updates do not require the GM to scroll back down to the tracker controls after every action.
-- [ ] The scene update panel remains usable with or without a separate success notification.
-- [ ] Player auto-refresh preserves the current player display scroll position where practical.
-- [ ] The solution remains simple HTML/CSS/JavaScript with no frontend framework.
-- [ ] Validation errors still bring the GM to the relevant error context.
-- [ ] Behavior is covered by focused route/template or frontend tests where practical.
+- [x] After a GM scene, asset, or tracker form submission, the GM page returns to the relevant area instead of always landing at the top of the page.
+- [x] Repeated tracker updates do not require the GM to scroll back down to the tracker controls after every action.
+- [x] The scene update panel remains usable with or without a separate success notification.
+- [x] Player auto-refresh preserves the current player display scroll position where practical.
+- [x] The solution remains simple HTML/CSS/JavaScript with no frontend framework.
+- [x] Validation errors still bring the GM to the relevant error context.
+- [x] Behavior is covered by focused route/template or frontend tests where practical.
 
 ## Notes
 

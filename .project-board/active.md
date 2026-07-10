@@ -8,6 +8,7 @@ This file is a quick index of current actionable work. Full scope and acceptance
 
 ## Near-Term Backlog
 
+- `P03-007 Add GM Action Feedback` - Backlog
 - `P02-006 Add Prepared Scene Library` - Backlog, improves the scene workflow after the current single live-entry scene form.
 
 ## Phase 4 Backlog

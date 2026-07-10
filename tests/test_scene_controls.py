@@ -84,3 +84,17 @@ def test_gm_scene_form_updates_scene(client):
     assert response.status_code == 200
     assert "Bridge" in body
     assert "The bridge sways." in body
+
+
+def test_gm_scene_form_redirects_to_scene_panel(client):
+    response = client.post(
+        "/s/form-scene-scroll/gm/scene",
+        data={
+            "title": "Bridge",
+            "description": "The bridge sways.",
+            "image_asset_id": "",
+        },
+    )
+
+    assert response.status_code == 302
+    assert response.headers["location"] == "/s/form-scene-scroll/gm#scene-panel"

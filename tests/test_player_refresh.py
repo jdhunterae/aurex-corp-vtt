@@ -30,6 +30,8 @@ def test_player_refresh_script_fetches_only_public_state(client):
     assert response.status_code == 200
     assert "dataset.publicStateUrl" in body
     assert "window.fetch(publicStateUrl" in body
+    assert "function preserveScroll(callback)" in body
+    assert "window.scrollTo(scrollX, scrollY)" in body
     assert "/api/gm/" not in body
     assert "gm_notes" not in body
 

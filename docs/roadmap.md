@@ -94,8 +94,10 @@ Tickets:
 - [x] P03-004 Add Tracker Player Display
 - [x] P03-005 Add Player Auto Refresh
 - [ ] P03-006 Redesign GM Control Layout
+- [ ] P03-007 Add GM Action Feedback
+- [x] P03-008 Retain Scroll Position After Updates
 
-Phase 3 has a usable player display: public scene and tracker changes now refresh automatically from the public projection endpoint.
+Phase 3 has a usable player display: public scene and tracker changes now refresh automatically from the public projection endpoint. GM form submissions now return to the relevant page area after scene, asset, and tracker updates.
 
 Current active ticket:
 

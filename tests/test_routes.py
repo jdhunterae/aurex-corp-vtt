@@ -22,6 +22,20 @@ def test_gm_routes_return_page_shells(client):
     assert "GM Session" in session.get_data(as_text=True)
 
 
+def test_gm_page_includes_scroll_targets(client):
+    response = client.get("/s/scroll-targets/gm")
+    body = response.get_data(as_text=True)
+
+    assert response.status_code == 200
+    assert 'id="scene-panel"' in body
+    assert 'id="assets-panel"' in body
+    assert 'id="trackers-panel"' in body
+    assert 'action="/s/scroll-targets/gm/scene#scene-panel"' in body
+    assert 'action="/s/scroll-targets/gm/assets/upload#assets-panel"' in body
+    assert 'action="/s/scroll-targets/gm/assets/download#assets-panel"' in body
+    assert 'action="/s/scroll-targets/gm/trackers#trackers-panel"' in body
+
+
 def test_player_routes_return_passive_page_shell(client):
     response = client.get("/s/demo-session/player")
     body = response.get_data(as_text=True)

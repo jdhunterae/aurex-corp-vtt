@@ -62,7 +62,7 @@ def create_app() -> Flask:
                 ),
                 400,
             )
-        return redirect(url_for("gm_session", session_id=session_id))
+        return redirect(url_for("gm_session", session_id=session_id, _anchor="scene-panel"))
 
     @app.post("/s/<session_id>/gm/assets/upload")
     def gm_asset_upload(session_id: str):
@@ -85,7 +85,7 @@ def create_app() -> Flask:
                 ),
                 400,
             )
-        return redirect(url_for("gm_session", session_id=session_id))
+        return redirect(url_for("gm_session", session_id=session_id, _anchor="assets-panel"))
 
     @app.post("/s/<session_id>/gm/assets/download")
     def gm_asset_download(session_id: str):
@@ -108,7 +108,7 @@ def create_app() -> Flask:
                 ),
                 400,
             )
-        return redirect(url_for("gm_session", session_id=session_id))
+        return redirect(url_for("gm_session", session_id=session_id, _anchor="assets-panel"))
 
     @app.post("/s/<session_id>/gm/trackers")
     def gm_tracker_create(session_id: str):
@@ -117,7 +117,7 @@ def create_app() -> Flask:
             create_tracker(session, tracker_form_payload(request.form))
         except TrackerValidationError as error:
             return render_gm_session_error(session, str(error))
-        return redirect(url_for("gm_session", session_id=session_id))
+        return redirect(url_for("gm_session", session_id=session_id, _anchor="trackers-panel"))
 
     @app.post("/s/<session_id>/gm/trackers/<tracker_id>")
     def gm_tracker_update(session_id: str, tracker_id: str):
@@ -126,7 +126,7 @@ def create_app() -> Flask:
             update_tracker(session, tracker_id, tracker_form_payload(request.form))
         except TrackerValidationError as error:
             return render_gm_session_error(session, str(error))
-        return redirect(url_for("gm_session", session_id=session_id))
+        return redirect(url_for("gm_session", session_id=session_id, _anchor=tracker_id))
 
     @app.post("/s/<session_id>/gm/trackers/<tracker_id>/adjust")
     def gm_tracker_adjust(session_id: str, tracker_id: str):
@@ -135,7 +135,7 @@ def create_app() -> Flask:
             adjust_tracker(session, tracker_id, request.form.get("delta", 0))
         except TrackerValidationError as error:
             return render_gm_session_error(session, str(error))
-        return redirect(url_for("gm_session", session_id=session_id))
+        return redirect(url_for("gm_session", session_id=session_id, _anchor=tracker_id))
 
     @app.get("/s/<session_id>/player")
     def player_view(session_id: str):

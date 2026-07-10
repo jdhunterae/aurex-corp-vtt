@@ -90,6 +90,13 @@ function setWarningVisible(warning, visible) {
   warning.hidden = !visible;
 }
 
+function preserveScroll(callback) {
+  const scrollX = window.scrollX;
+  const scrollY = window.scrollY;
+  callback();
+  window.scrollTo(scrollX, scrollY);
+}
+
 function updateCountdown(countdown, seconds) {
   if (countdown) {
     countdown.textContent = String(seconds);
@@ -134,8 +141,10 @@ function startPlayerRefresh(root) {
         throw new Error("Public state request failed.");
       }
       const publicState = await response.json();
-      renderScene(sceneRoot, publicState.scene);
-      renderTrackers(trackersRoot, publicState.trackers);
+      preserveScroll(() => {
+        renderScene(sceneRoot, publicState.scene);
+        renderTrackers(trackersRoot, publicState.trackers);
+      });
       window.clearInterval(retryTimer);
       setWarningVisible(warning, false);
     } catch (error) {

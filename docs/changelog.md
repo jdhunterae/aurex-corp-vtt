@@ -11,11 +11,13 @@
 - Added player tracker rendering backed only by public projected state.
 - Added player auto-refresh using public projection polling.
 - Added non-interrupting stale-display warning with retry countdown when public polling fails.
+- Added GM and player scroll-position retention around form updates and player auto-refresh.
 - Added route, projection, control, and display tests for tracker behavior.
 
 Remaining Phase 3 work:
 
 - Redesign the GM control layout for faster live-session use.
+- Add GM action feedback for scene updates.
 
 ## Phase 2
 

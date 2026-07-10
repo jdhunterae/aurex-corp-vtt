@@ -10,12 +10,12 @@
       <h1>{{ session.name }}</h1>
     </header>
 
-    <section class="panel">
+    <section class="panel" id="scene-panel">
       <h2>Scene</h2>
       {% if error_message %}
         <p class="error-message">{{ error_message }}</p>
       {% endif %}
-      <form class="control-form" action="{{ url_for('gm_scene_update', session_id=session.id) }}" method="post">
+      <form class="control-form" action="{{ url_for('gm_scene_update', session_id=session.id, _anchor='scene-panel') }}" method="post">
         <label>
           <span>Title</span>
           <input name="title" value="{{ public_state.scene.title if public_state.scene else '' }}">
@@ -33,11 +33,11 @@
       <p class="muted">Session ID: {{ session.id }}</p>
     </section>
 
-    <section class="panel">
+    <section class="panel" id="assets-panel">
       <h2>Assets</h2>
       <form
         class="control-form asset-upload-form"
-        action="{{ url_for('gm_asset_upload', session_id=session.id) }}"
+        action="{{ url_for('gm_asset_upload', session_id=session.id, _anchor='assets-panel') }}"
         data-preview-url="{{ url_for('api_asset_upload_preview', session_id=session.id) }}"
         method="post"
         enctype="multipart/form-data"
@@ -62,7 +62,7 @@
 
       <form
         class="control-form asset-download-form"
-        action="{{ url_for('gm_asset_download', session_id=session.id) }}"
+        action="{{ url_for('gm_asset_download', session_id=session.id, _anchor='assets-panel') }}"
         data-preview-url="{{ url_for('api_asset_download_preview', session_id=session.id) }}"
         method="post"
       >
@@ -95,9 +95,9 @@
       {% endif %}
     </section>
 
-    <section class="panel">
+    <section class="panel" id="trackers-panel">
       <h2>Trackers</h2>
-      <form class="control-form" action="{{ url_for('gm_tracker_create', session_id=session.id) }}" method="post">
+      <form class="control-form" action="{{ url_for('gm_tracker_create', session_id=session.id, _anchor='trackers-panel') }}" method="post">
         <label>
           <span>Label</span>
           <input name="label" placeholder="Security Alert">
@@ -163,9 +163,9 @@
       {% if session.trackers %}
         <div class="tracker-list">
           {% for tracker in session.trackers %}
-            <section class="tracker-item">
+            <section class="tracker-item" id="{{ tracker.id }}">
               <h3>{{ tracker.label }}</h3>
-              <form class="control-form" action="{{ url_for('gm_tracker_update', session_id=session.id, tracker_id=tracker.id) }}" method="post">
+              <form class="control-form" action="{{ url_for('gm_tracker_update', session_id=session.id, tracker_id=tracker.id, _anchor=tracker.id) }}" method="post">
                 <label>
                   <span>Label</span>
                   <input name="label" value="{{ tracker.label }}">
@@ -230,7 +230,7 @@
               </form>
               <div class="tracker-adjustments">
                 {% for delta in tracker.step_controls %}
-                  <form action="{{ url_for('gm_tracker_adjust', session_id=session.id, tracker_id=tracker.id) }}" method="post">
+                  <form action="{{ url_for('gm_tracker_adjust', session_id=session.id, tracker_id=tracker.id, _anchor=tracker.id) }}" method="post">
                     <input name="delta" type="hidden" value="{{ delta }}">
                     <button type="submit">{{ '%+d' | format(delta) }}</button>
                   </form>
